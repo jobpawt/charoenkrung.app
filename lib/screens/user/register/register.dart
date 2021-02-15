@@ -1,9 +1,11 @@
 import 'package:charoenkrung_app/config/config.dart';
 import 'package:charoenkrung_app/data/userData.dart';
+import 'package:charoenkrung_app/services/userService.dart';
 import 'package:charoenkrung_app/utils/appBar.dart';
 import 'package:charoenkrung_app/utils/button.dart';
 import 'package:charoenkrung_app/utils/dialogBox.dart';
 import 'package:charoenkrung_app/utils/editText.dart';
+import 'package:charoenkrung_app/utils/response.dart';
 import 'package:charoenkrung_app/utils/validate.dart';
 import 'package:flutter/material.dart';
 
@@ -34,7 +36,10 @@ class Register extends StatelessWidget {
                 controller: _phone,
                 type: EditTextType.phone,
                 text: 'เบอร์มือถือ'),
-            createButton(text: 'สร้าง', color: Config.primaryColor, press: () => register(context))
+            createButton(
+                text: 'สร้าง',
+                color: Config.primaryColor,
+                press: () => register(context))
           ],
         ));
   }
@@ -51,9 +56,28 @@ class Register extends StatelessWidget {
         password: password,
         rePassword: rePassword,
         phone: phone)) {
-      UserData user =
-          new UserData(email: email, password: password, phone: phone);
-          print(user.toJson());
+      UserData user = new UserData(
+          email: email, password: password, phone: phone, role: "user");
+      DialogBox.loading(context: context, message: 'กำลังสร้างบัญชี');
+      await UserService.register(user).then((res) {
+        DialogBox.close(context);
+        if (res.type == "error") {
+          DialogBox.oneButton(
+              context: context,
+              message: res.message,
+              title: 'เกิดข้อผิดพลาด',
+              press: () => DialogBox.close(context));
+        } else {
+          DialogBox.oneButton(
+              context: context,
+              message: res.message,
+              title: 'สำเร็จ',
+              press: () {
+                DialogBox.close(context);
+                Navigator.pop(context);
+              });
+        }
+      });
     }
   }
 

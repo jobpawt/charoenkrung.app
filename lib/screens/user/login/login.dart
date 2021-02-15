@@ -58,7 +58,7 @@ class Login extends StatelessWidget {
     await UserService.login(UserData(email: email, password: password))
         .then((res) {
       DialogBox.close(context);
-      if (res is ServerResponse && res.data == null) {
+      if (res.type == "error") {
         DialogBox.oneButton(
             context: context,
             message: res.message,
