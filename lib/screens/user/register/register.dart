@@ -1,7 +1,10 @@
 import 'package:charoenkrung_app/config/config.dart';
+import 'package:charoenkrung_app/data/userData.dart';
 import 'package:charoenkrung_app/utils/appBar.dart';
 import 'package:charoenkrung_app/utils/button.dart';
+import 'package:charoenkrung_app/utils/dialogBox.dart';
 import 'package:charoenkrung_app/utils/editText.dart';
+import 'package:charoenkrung_app/utils/validate.dart';
 import 'package:flutter/material.dart';
 
 class Register extends StatelessWidget {
@@ -28,9 +31,45 @@ class Register extends StatelessWidget {
                 type: EditTextType.password,
                 text: 'ยืนยันรหัสผ่าน'),
             createEditText(
-                controller: _phone, type: EditTextType.phone, text: 'เบอร์มือถือ'),
-            createButton(text: 'สร้าง', color: Config.primaryColor, press: null)
+                controller: _phone,
+                type: EditTextType.phone,
+                text: 'เบอร์มือถือ'),
+            createButton(text: 'สร้าง', color: Config.primaryColor, press: () => register(context))
           ],
         ));
+  }
+
+  register(BuildContext context) async {
+    String email = _email.text.trim();
+    String password = _password.text.trim();
+    String rePassword = _rePass.text.trim();
+    String phone = _phone.text.trim();
+
+    if (validate(
+        context: context,
+        email: email,
+        password: password,
+        rePassword: rePassword,
+        phone: phone)) {
+      UserData user =
+          new UserData(email: email, password: password, phone: phone);
+          print(user.toJson());
+    }
+  }
+
+  bool validate(
+      {BuildContext context,
+      String email,
+      String password,
+      String rePassword,
+      String phone}) {
+    return Validate(context: context, title: 'email')
+            .isNotEmpty(email)
+            .check() &&
+        Validate(context: context, title: 'password')
+            .isNotEmpty(password)
+            .isEqual(password, rePassword)
+            .check() &&
+        Validate(context: context, title: 'phone').isNotEmpty(phone).check();
   }
 }
