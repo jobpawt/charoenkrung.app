@@ -16,12 +16,12 @@ class Home extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(
             create: (_) => MenuProvider(
-                menus: ['all', 'food', 'pre-order', 'promotion'], selected: 0))
+                menus: ['อาหาร', 'พรีออร์เดอร์', 'โปรโมชั่น', 'ข่าวสาร'], selected: 0))
       ],
       child: Scaffold(
         backgroundColor: Colors.white,
         appBar:
-            buildAppBar(context: context, user: user, title: "Charoenkrung"),
+            buildAppBar(context: context, user: user, title: 'ตลาดเจริญกรุง ๑๐๓'),
         body: buildBody(context: context),
       ),
     );

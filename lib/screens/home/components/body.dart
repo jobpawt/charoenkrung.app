@@ -53,7 +53,7 @@ class _BodyState extends State<Body> {
                   itemBuilder: (context, index) => null)
               : Center(
                   child: Container(
-                    child: Text('not have data'),
+                    child: Text('ไม่มีข้อมูล'),
                   ),
                 );
         }
