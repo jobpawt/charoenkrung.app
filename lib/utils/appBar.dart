@@ -1,6 +1,5 @@
-import 'package:charoenkrung_app/config/config.dart';
 import 'package:flutter/material.dart';
-AppBar createAppBar({BuildContext context, String title}) {
+AppBar createAppBar({BuildContext context, String title, Color color}) {
   return AppBar(
     elevation: 0,
     backgroundColor: Colors.transparent,
@@ -8,10 +7,10 @@ AppBar createAppBar({BuildContext context, String title}) {
     title: Text(
       title,
       style:
-          Theme.of(context).textTheme.subtitle1.copyWith(color: Colors.black),
+          TextStyle(fontFamily: 'Prompt', fontSize: 20),
     ),
     leading: IconButton(
-        icon: Icon(Icons.arrow_back, color: Config.primaryColor),
+        icon: Icon(Icons.arrow_back_ios_outlined, color: color),
         onPressed: () => Navigator.pop(context)),
   );
 }

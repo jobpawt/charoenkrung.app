@@ -18,8 +18,7 @@ class MyApp extends StatelessWidget {
             debugShowCheckedModeBanner: false, 
             title: 'Charoenkrung App',
             theme: ThemeData(
-              primarySwatch: Colors.pink,
-              visualDensity: VisualDensity.adaptivePlatformDensity,
+              fontFamily: 'Prompt'
             ),
             home: Home()));
   }

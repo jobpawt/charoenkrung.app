@@ -25,9 +25,9 @@ class MenuBar extends StatelessWidget {
                 alignment: Alignment.center,
                 decoration: BoxDecoration(
                     color: selected == index
-                        ? Config.accentColor
+                        ? Config.darkColor
                         : Colors.transparent,
-                    borderRadius: BorderRadius.circular(10)),
+                    borderRadius: BorderRadius.circular(30)),
                 child: Text(
                   menus[index],
                   style: TextStyle(

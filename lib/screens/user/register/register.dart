@@ -18,7 +18,7 @@ class Register extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.white,
+        backgroundColor: Config.lightColor,
         appBar: createAppBar(context: context, title: 'สร้างบัญชี'),
         body: ListView(
           children: [

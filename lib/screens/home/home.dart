@@ -19,7 +19,7 @@ class Home extends StatelessWidget {
                 menus: ['อาหาร', 'พรีออร์เดอร์', 'โปรโมชั่น', 'ข่าวสาร'], selected: 0))
       ],
       child: Scaffold(
-        backgroundColor: Colors.white,
+        backgroundColor: Config.lightColor,
         appBar:
             buildAppBar(context: context, user: user, title: 'ตลาดเจริญกรุง ๑๐๓'),
         body: buildBody(context: context),
@@ -37,19 +37,15 @@ class Home extends StatelessWidget {
     return AppBar(
       elevation: 0,
       backgroundColor: Colors.transparent,
-      title: Text(
-        title,
-        style:
-            Theme.of(context).textTheme.subtitle1.copyWith(color: Colors.black),
-      ),
       actions: [
         user == null
             ? Row(
                 children: [
                   IconButton(
                       icon: Icon(
-                        Icons.account_circle,
-                        color: Config.primaryColor,
+                        Icons.account_circle_outlined,
+                        size: 32,
+                        color: Config.darkColor,
                       ),
                       onPressed: () => Navigator.push(
                           context, MaterialPageRoute(builder: (context) => Login())))

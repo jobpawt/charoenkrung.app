@@ -18,37 +18,53 @@ class Login extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: createAppBar(context: context, title: 'เข้าสู่ระบบ'),
-      body: ListView(
-        children: [
-          createEditText(
-              controller: _email, type: EditTextType.email, text: 'อีเมล์'),
-          createEditText(
-              controller: _password,
-              type: EditTextType.password,
-              text: 'รหัสผ่าน'),
-          createButton(
-              text: 'เข้าสู่ระบบ',
-              color: Config.primaryColor,
-              press: () => login(context)),
-          Container(
-            padding: EdgeInsets.all(20),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text("หากคุณยังไม่มีบัญชี"),
-                createFlatButton(
-                    text: 'สมัครสมาชิก',
-                    color: Config.darkColor,
-                    press: () => Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => Register())))
-              ],
-            ),
-          )
-        ],
-      ),
-    );
+        backgroundColor: Config.accentColor,
+        appBar: createAppBar(context: context, title: 'เข้าสู่ระบบ', color: Colors.white),
+        body: Stack(
+          children: [
+            Container(
+              margin: EdgeInsets.only(top: 50),
+              padding: EdgeInsets.only(top: 50),
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(40),
+                      topRight: Radius.circular(40)),
+                  color: Colors.white),
+              child: ListView(
+                children: [
+                  createEditText(
+                      controller: _email,
+                      type: EditTextType.email,
+                      text: 'อีเมล์'),
+                  createEditText(
+                      controller: _password,
+                      type: EditTextType.password,
+                      text: 'รหัสผ่าน'),
+                  createButton(
+                      text: 'เข้าสู่ระบบ',
+                      color: Config.primaryColor,
+                      press: () => login(context)),
+                  Container(
+                    padding: EdgeInsets.all(20),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text("หากคุณยังไม่มีบัญชี"),
+                        createFlatButton(
+                            text: 'สมัครสมาชิก',
+                            color: Config.darkColor,
+                            press: () => Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => Register())))
+                      ],
+                    ),
+                  )
+                ],
+              ),
+            )
+          ],
+        ));
   }
 
   login(BuildContext context) async {

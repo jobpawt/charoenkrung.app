@@ -1,12 +1,6 @@
 import 'package:flutter/material.dart';
 
-enum EditTextType {
-  email,
-  text,
-  number,
-  phone,
-  password
-}
+enum EditTextType { email, text, number, phone, password }
 
 Widget createEditText(
     {TextEditingController controller, EditTextType type, String text}) {
@@ -18,7 +12,10 @@ Widget createEditText(
           controller: controller,
           keyboardType: TextInputType.emailAddress,
           decoration: InputDecoration(
-              labelText: text, border: OutlineInputBorder()),
+              filled: true,
+              fillColor: Colors.white,
+              labelText: text,
+              border: OutlineInputBorder(borderRadius: BorderRadius.circular(25))),
         ),
       );
       break;
@@ -28,7 +25,10 @@ Widget createEditText(
         child: TextField(
           controller: controller,
           decoration: InputDecoration(
-              labelText: text, border: OutlineInputBorder()),
+              filled: true,
+              fillColor: Colors.white,
+              labelText: text,
+              border: OutlineInputBorder(borderRadius: BorderRadius.circular(25))),
         ),
       );
       break;
@@ -39,7 +39,10 @@ Widget createEditText(
           controller: controller,
           keyboardType: TextInputType.number,
           decoration: InputDecoration(
-              labelText: text, border: OutlineInputBorder()),
+              filled: true,
+              fillColor: Colors.white,
+              labelText: text,
+              border: OutlineInputBorder(borderRadius: BorderRadius.circular(25))),
         ),
       );
       break;
@@ -50,7 +53,11 @@ Widget createEditText(
           controller: controller,
           keyboardType: TextInputType.phone,
           decoration: InputDecoration(
-              labelText: text, border: OutlineInputBorder()),
+              filled: true,
+              fillColor: Colors.white,
+              labelText: text,
+              border:
+                  OutlineInputBorder(borderRadius: BorderRadius.circular(20))),
         ),
       );
       break;
@@ -62,7 +69,10 @@ Widget createEditText(
           controller: controller,
           keyboardType: TextInputType.text,
           decoration: InputDecoration(
-              labelText: text, border: OutlineInputBorder()),
+              filled: true,
+              fillColor: Colors.white,
+              labelText: text,
+              border: OutlineInputBorder(borderRadius: BorderRadius.circular(25))),
         ),
       );
       break;
@@ -72,7 +82,10 @@ Widget createEditText(
         child: TextField(
           controller: controller,
           decoration: InputDecoration(
-              labelText: text, border: OutlineInputBorder()),
+              filled: true,
+              fillColor: Colors.white,
+              labelText: text,
+              border: OutlineInputBorder(borderRadius: BorderRadius.circular(25))),
         ),
       );
       break;
