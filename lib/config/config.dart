@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class Config {
- static const String DATABASE = "http://10.0.2.2:3000";
+ static const String DATABASE = "http://10.0.2.2:8020";
  static const String IMAGE = "http://10.0.2.2:8040";
  //colors
  static const Color primaryColor = Color(0xFFb34180); 
