@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class Config {
  static const String DATABASE = "http://10.0.2.2:8020";
  static const String IMAGE = "http://10.0.2.2:8040";
- static const double kMargin = 50;
+ static const double kMargin = 20;
  static const double kPadding = 20;
  static const double kRadius = 40;
  static const double kSpace = 30;

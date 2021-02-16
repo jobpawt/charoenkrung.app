@@ -3,6 +3,7 @@ import 'package:charoenkrung_app/data/userData.dart';
 import 'package:charoenkrung_app/providers/userProvider.dart';
 import 'package:charoenkrung_app/screens/home/components/body.dart';
 import 'package:charoenkrung_app/screens/user/login/login.dart';
+import 'package:charoenkrung_app/screens/user/user.dart';
 import 'package:charoenkrung_app/utils/menuBar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -61,7 +62,8 @@ class Home extends StatelessWidget {
                   IconButton(
                       icon: SvgPicture.asset('assets/Mymenu.svg',
                           color: Config.darkColor),
-                      onPressed: null)
+                      onPressed: () => Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => User())))
                 ],
               )
       ],

@@ -12,7 +12,7 @@ class MenuBar extends StatelessWidget {
 
     return Column(
       children: [
-        SizedBox(height: Config.kSpace),
+        SizedBox(height: 10),
         Container(
           height: 30,
           margin: EdgeInsets.symmetric(vertical: 20),
@@ -42,7 +42,7 @@ class MenuBar extends StatelessWidget {
                 );
               }),
         ),
-        SizedBox(height: Config.kSpace),
+        SizedBox(height: 10),
       ],
     );
   }

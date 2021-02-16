@@ -5,6 +5,7 @@ import 'package:charoenkrung_app/utils/appBar.dart';
 import 'package:charoenkrung_app/utils/button.dart';
 import 'package:charoenkrung_app/utils/dialogBox.dart';
 import 'package:charoenkrung_app/utils/editText.dart';
+import 'package:charoenkrung_app/utils/panel.dart';
 import 'package:charoenkrung_app/utils/validate.dart';
 import 'package:flutter/material.dart';
 
@@ -20,14 +21,7 @@ class Register extends StatelessWidget {
         backgroundColor: Config.accentColor,
         appBar: createAppBar(
             context: context, title: 'สร้างบัญชี', color: Colors.white),
-        body: Container(
-          margin: EdgeInsets.only(top: Config.kMargin),
-          padding: EdgeInsets.only(top: Config.kPadding),
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(Config.kRadius),
-                  topRight: Radius.circular(Config.kRadius)),
-              color: Colors.white),
+        body: createPanel(
           child: ListView(
             children: [
               createEditText(

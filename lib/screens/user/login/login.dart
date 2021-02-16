@@ -7,6 +7,7 @@ import 'package:charoenkrung_app/utils/appBar.dart';
 import 'package:charoenkrung_app/utils/button.dart';
 import 'package:charoenkrung_app/utils/dialogBox.dart';
 import 'package:charoenkrung_app/utils/editText.dart';
+import 'package:charoenkrung_app/utils/panel.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -18,21 +19,13 @@ class Login extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: Config.accentColor,
-        appBar: createAppBar(context: context, title: 'เข้าสู่ระบบ', color: Colors.white),
-        body: Container(
-          margin: EdgeInsets.only(top: Config.kMargin),
-          padding: EdgeInsets.only(top: Config.kPadding),
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(Config.kRadius),
-                  topRight: Radius.circular(Config.kRadius)),
-              color: Colors.white),
+        appBar: createAppBar(
+            context: context, title: 'เข้าสู่ระบบ', color: Colors.white),
+        body: createPanel(
           child: ListView(
             children: [
               createEditText(
-                  controller: _email,
-                  type: EditTextType.email,
-                  text: 'อีเมล์'),
+                  controller: _email, type: EditTextType.email, text: 'อีเมล์'),
               createEditText(
                   controller: _password,
                   type: EditTextType.password,
