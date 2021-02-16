@@ -15,5 +15,8 @@ class DayData {
     this.days = json['open_days'];
   }
 
+  Map<String, dynamic> get day {
+    return this.days;
+  }
 
 }
