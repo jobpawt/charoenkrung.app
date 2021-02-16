@@ -5,7 +5,6 @@ import 'package:charoenkrung_app/utils/appBar.dart';
 import 'package:charoenkrung_app/utils/button.dart';
 import 'package:charoenkrung_app/utils/dialogBox.dart';
 import 'package:charoenkrung_app/utils/editText.dart';
-import 'package:charoenkrung_app/utils/response.dart';
 import 'package:charoenkrung_app/utils/validate.dart';
 import 'package:flutter/material.dart';
 
@@ -18,29 +17,42 @@ class Register extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Config.lightColor,
-        appBar: createAppBar(context: context, title: 'สร้างบัญชี'),
-        body: ListView(
-          children: [
-            createEditText(
-                controller: _email, type: EditTextType.email, text: 'อีเมล์'),
-            createEditText(
-                controller: _password,
-                type: EditTextType.password,
-                text: 'รหัสผ่าน'),
-            createEditText(
-                controller: _rePass,
-                type: EditTextType.password,
-                text: 'ยืนยันรหัสผ่าน'),
-            createEditText(
-                controller: _phone,
-                type: EditTextType.phone,
-                text: 'เบอร์มือถือ'),
-            createButton(
-                text: 'สร้าง',
-                color: Config.primaryColor,
-                press: () => register(context))
-          ],
+        backgroundColor: Config.accentColor,
+        appBar: createAppBar(
+            context: context, title: 'สร้างบัญชี', color: Colors.white),
+        body: Container(
+          margin: EdgeInsets.only(top: Config.kMargin),
+          padding: EdgeInsets.only(top: Config.kPadding),
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(Config.kRadius),
+                  topRight: Radius.circular(Config.kRadius)),
+              color: Colors.white),
+          child: ListView(
+            children: [
+              createEditText(
+                  controller: _email, type: EditTextType.email, text: 'อีเมล์'),
+              createEditText(
+                  controller: _password,
+                  type: EditTextType.password,
+                  text: 'รหัสผ่าน'),
+              createEditText(
+                  controller: _rePass,
+                  type: EditTextType.password,
+                  text: 'ยืนยันรหัสผ่าน'),
+              createEditText(
+                  controller: _phone,
+                  type: EditTextType.phone,
+                  text: 'เบอร์มือถือ'),
+              SizedBox(
+                height: Config.kSpace,
+              ),
+              createButton(
+                  text: 'สร้าง',
+                  color: Config.primaryColor,
+                  press: () => register(context))
+            ],
+          ),
         ));
   }
 

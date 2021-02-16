@@ -7,6 +7,7 @@ class ProductData{
   int stock;
   int price;
   String status;
+  // ignore: non_constant_identifier_names
   int type_id;
 
   ProductData(
@@ -18,6 +19,7 @@ class ProductData{
       this.stock,
       this.price,
       this.status,
+      // ignore: non_constant_identifier_names
       this.type_id});
 
   ProductData.fromJson(Map<String, dynamic> json) {

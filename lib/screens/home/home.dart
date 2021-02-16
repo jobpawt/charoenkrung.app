@@ -5,6 +5,7 @@ import 'package:charoenkrung_app/screens/home/components/body.dart';
 import 'package:charoenkrung_app/screens/user/login/login.dart';
 import 'package:charoenkrung_app/utils/menuBar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 import 'package:charoenkrung_app/providers/menuProvider.dart';
 
@@ -16,12 +17,13 @@ class Home extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(
             create: (_) => MenuProvider(
-                menus: ['อาหาร', 'พรีออร์เดอร์', 'โปรโมชั่น', 'ข่าวสาร'], selected: 0))
+                menus: ['อาหาร', 'พรีออร์เดอร์', 'โปรโมชั่น', 'ข่าวสาร'],
+                selected: 0))
       ],
       child: Scaffold(
         backgroundColor: Config.lightColor,
-        appBar:
-            buildAppBar(context: context, user: user, title: 'ตลาดเจริญกรุง ๑๐๓'),
+        appBar: buildAppBar(
+            context: context, user: user, title: 'ตลาดเจริญกรุง ๑๐๓'),
         body: buildBody(context: context),
       ),
     );
@@ -42,22 +44,23 @@ class Home extends StatelessWidget {
             ? Row(
                 children: [
                   IconButton(
-                      icon: Icon(
-                        Icons.account_circle_outlined,
-                        size: 32,
+                      icon: SvgPicture.asset(
+                        'assets/Myuser.svg',
                         color: Config.darkColor,
                       ),
-                      onPressed: () => Navigator.push(
-                          context, MaterialPageRoute(builder: (context) => Login())))
+                      onPressed: () => Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => Login())))
                 ],
               )
             : Row(
                 children: [
                   IconButton(
-                      icon: Icon(Icons.sms, color: Config.primaryColor),
+                      icon: SvgPicture.asset('assets/Mychat.svg',
+                          color: Config.darkColor),
                       onPressed: null),
                   IconButton(
-                      icon: Icon(Icons.menu, color: Config.primaryColor),
+                      icon: SvgPicture.asset('assets/Mymenu.svg',
+                          color: Config.darkColor),
                       onPressed: null)
                 ],
               )

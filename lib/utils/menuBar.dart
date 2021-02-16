@@ -10,32 +10,40 @@ class MenuBar extends StatelessWidget {
     List menus = menu.menus;
     int selected = menu.selected;
 
-    return Container(
-      height: 30,
-      margin: EdgeInsets.symmetric(vertical: 20),
-      child: ListView.builder(
-          scrollDirection: Axis.horizontal,
-          itemCount: menus.length,
-          itemBuilder: (context, index) {
-            return GestureDetector(
-              onTap: () => menu.choose(index: index),
-              child: Container(
-                margin: EdgeInsets.symmetric(horizontal: 15),
-                padding: EdgeInsets.symmetric(horizontal: 10),
-                alignment: Alignment.center,
-                decoration: BoxDecoration(
-                    color: selected == index
-                        ? Config.darkColor
-                        : Colors.transparent,
-                    borderRadius: BorderRadius.circular(30)),
-                child: Text(
-                  menus[index],
-                  style: TextStyle(
-                      color: selected == index ? Colors.white : Colors.black),
-                ),
-              ),
-            );
-          }),
+    return Column(
+      children: [
+        SizedBox(height: Config.kSpace),
+        Container(
+          height: 30,
+          margin: EdgeInsets.symmetric(vertical: 20),
+          child: ListView.builder(
+              scrollDirection: Axis.horizontal,
+              itemCount: menus.length,
+              itemBuilder: (context, index) {
+                return GestureDetector(
+                  onTap: () => menu.choose(index: index),
+                  child: Container(
+                    margin: EdgeInsets.symmetric(horizontal: 15),
+                    padding: EdgeInsets.symmetric(horizontal: 10),
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                        color: selected == index
+                            ? Config.darkColor
+                            : Colors.transparent,
+                        borderRadius: BorderRadius.circular(30)),
+                    child: Text(
+                      menus[index],
+                      style: TextStyle(
+                          fontSize: 14,
+                          color:
+                              selected == index ? Colors.white : Colors.black),
+                    ),
+                  ),
+                );
+              }),
+        ),
+        SizedBox(height: Config.kSpace),
+      ],
     );
   }
 }

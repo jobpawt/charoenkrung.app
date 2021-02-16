@@ -9,7 +9,8 @@ Widget createButton({String text, Color color, Function press}) {
         elevation: 0,
         color: color,
         onPressed: press,
-        child: Text(text, style: TextStyle(color: Colors.white)),
+        child: Text(text, style: TextStyle(color: Colors.white, fontSize: 16)),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
       ),
     ),
   );
@@ -20,6 +21,6 @@ Widget createFlatButton({String text, Color color, Function press}) {
       onPressed: press,
       child: Text(
         text,
-        style: TextStyle(color: color, fontSize: 16),
+        style: TextStyle(color: color, fontSize: 18),
       ));
 }

@@ -7,7 +7,6 @@ import 'package:charoenkrung_app/utils/appBar.dart';
 import 'package:charoenkrung_app/utils/button.dart';
 import 'package:charoenkrung_app/utils/dialogBox.dart';
 import 'package:charoenkrung_app/utils/editText.dart';
-import 'package:charoenkrung_app/utils/response.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -20,50 +19,53 @@ class Login extends StatelessWidget {
     return Scaffold(
         backgroundColor: Config.accentColor,
         appBar: createAppBar(context: context, title: 'เข้าสู่ระบบ', color: Colors.white),
-        body: Stack(
-          children: [
-            Container(
-              margin: EdgeInsets.only(top: 50),
-              padding: EdgeInsets.only(top: 50),
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(40),
-                      topRight: Radius.circular(40)),
-                  color: Colors.white),
-              child: ListView(
-                children: [
-                  createEditText(
-                      controller: _email,
-                      type: EditTextType.email,
-                      text: 'อีเมล์'),
-                  createEditText(
-                      controller: _password,
-                      type: EditTextType.password,
-                      text: 'รหัสผ่าน'),
-                  createButton(
-                      text: 'เข้าสู่ระบบ',
-                      color: Config.primaryColor,
-                      press: () => login(context)),
-                  Container(
-                    padding: EdgeInsets.all(20),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text("หากคุณยังไม่มีบัญชี"),
-                        createFlatButton(
-                            text: 'สมัครสมาชิก',
-                            color: Config.darkColor,
-                            press: () => Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => Register())))
-                      ],
-                    ),
-                  )
-                ],
+        body: Container(
+          margin: EdgeInsets.only(top: Config.kMargin),
+          padding: EdgeInsets.only(top: Config.kPadding),
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(Config.kRadius),
+                  topRight: Radius.circular(Config.kRadius)),
+              color: Colors.white),
+          child: ListView(
+            children: [
+              createEditText(
+                  controller: _email,
+                  type: EditTextType.email,
+                  text: 'อีเมล์'),
+              createEditText(
+                  controller: _password,
+                  type: EditTextType.password,
+                  text: 'รหัสผ่าน'),
+              SizedBox(
+                height: Config.kSpace,
               ),
-            )
-          ],
+              createButton(
+                  text: 'เข้าสู่ระบบ',
+                  color: Config.primaryColor,
+                  press: () => login(context)),
+              SizedBox(
+                height: Config.kSpace,
+              ),
+              Container(
+                padding: EdgeInsets.all(20),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.baseline,
+                  children: [
+                    Text("หากคุณยังไม่มีบัญชี"),
+                    createFlatButton(
+                        text: 'สมัครสมาชิก',
+                        color: Config.darkColor,
+                        press: () => Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => Register())))
+                  ],
+                ),
+              )
+            ],
+          ),
         ));
   }
 
