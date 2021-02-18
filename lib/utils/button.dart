@@ -26,9 +26,29 @@ Widget createFlatButton({String text, Color color, Function press}) {
       ));
 }
 
+Widget createFlatButtonWithIcon(
+    {String text, Color color, Function press, IconData icon}) {
+  return FlatButton(
+      onPressed: press,
+      child: Row(
+        children: [
+          Icon(
+            icon,
+            color: Config.lightColor,
+            size: 32,
+          ),
+          Text(
+            text,
+            style: TextStyle(color: color),
+          )
+        ],
+      ));
+}
+
 Widget createOutlineButton({Function press, Color color, String text}) {
   return Container(
-    margin: EdgeInsets.symmetric(horizontal: Config.kMargin, vertical: Config.kPadding),
+    margin: EdgeInsets.symmetric(
+        horizontal: Config.kMargin, vertical: Config.kPadding),
     child: SizedBox(
       height: 50,
       child: OutlineButton(

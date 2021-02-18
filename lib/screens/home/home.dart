@@ -1,16 +1,31 @@
 import 'package:charoenkrung_app/config/config.dart';
+import 'package:charoenkrung_app/data/shopData.dart';
 import 'package:charoenkrung_app/data/userData.dart';
+import 'package:charoenkrung_app/providers/shopProvider.dart';
 import 'package:charoenkrung_app/providers/userProvider.dart';
 import 'package:charoenkrung_app/screens/home/components/body.dart';
 import 'package:charoenkrung_app/screens/user/login/login.dart';
 import 'package:charoenkrung_app/screens/user/user.dart';
+import 'package:charoenkrung_app/services/shopService.dart';
+import 'package:charoenkrung_app/utils/dialogBox.dart';
 import 'package:charoenkrung_app/utils/menuBar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 import 'package:charoenkrung_app/providers/menuProvider.dart';
 
-class Home extends StatelessWidget {
+class Home extends StatefulWidget {
+  @override
+  _HomeState createState() => _HomeState();
+}
+
+class _HomeState extends State<Home> {
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     var user = Provider.of<UserProvider>(context).user;
@@ -19,12 +34,11 @@ class Home extends StatelessWidget {
         ChangeNotifierProvider(
             create: (_) => MenuProvider(
                 menus: ['อาหาร', 'พรีออร์เดอร์', 'โปรโมชั่น', 'ข่าวสาร'],
-                selected: 0))
+                selected: 0)),
       ],
       child: Scaffold(
         backgroundColor: Config.lightColor,
-        appBar: buildAppBar(
-            context: context, user: user, title: 'ตลาดเจริญกรุง ๑๐๓'),
+        appBar: buildAppBar(user),
         body: buildBody(context: context),
       ),
     );
@@ -36,7 +50,7 @@ class Home extends StatelessWidget {
     );
   }
 
-  AppBar buildAppBar({BuildContext context, UserData user, String title}) {
+  AppBar buildAppBar(UserData user) {
     return AppBar(
       elevation: 0,
       backgroundColor: Colors.transparent,
@@ -69,4 +83,5 @@ class Home extends StatelessWidget {
       ],
     );
   }
+
 }

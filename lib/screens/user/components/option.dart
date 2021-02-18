@@ -23,15 +23,21 @@ class Options extends StatelessWidget {
         return Container();
         break;
       case 'ร้านของฉัน':
-        return Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
+        return Column(
           children: [
-            FlatButton(
-                onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => CreateShop())),
-                child: Text(
-                  'สร้างร้าน',
-                  style: TextStyle(color: Config.primaryColor, fontSize: 14),
-                ))
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                FlatButton(
+                    onPressed: () => Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => CreateShop())),
+                    child: Text(
+                      'สร้างร้าน',
+                      style:
+                          TextStyle(color: Config.primaryColor, fontSize: 14),
+                    )),
+              ],
+            ),
           ],
         );
         break;
