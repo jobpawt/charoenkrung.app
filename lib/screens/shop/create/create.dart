@@ -3,6 +3,7 @@ import 'package:charoenkrung_app/data/dayData.dart';
 import 'package:charoenkrung_app/data/shopData.dart';
 import 'package:charoenkrung_app/data/userData.dart';
 import 'package:charoenkrung_app/providers/userProvider.dart';
+import 'package:charoenkrung_app/services/imageService.dart';
 import 'package:charoenkrung_app/services/shopService.dart';
 import 'package:charoenkrung_app/utils/appBar.dart';
 import 'package:charoenkrung_app/utils/button.dart';
@@ -43,7 +44,9 @@ class _CreateShopState extends State<CreateShop> {
       body: createPanel(
           child: ListView(
         children: [
-          _imageFile != null ? createImageBox(_imageFile) : Container(),
+          _imageFile != null
+              ? createImageBox(imageFile: _imageFile)
+              : Container(),
           createOutlineButton(
             text: 'เลือกรูป',
             color: Config.primaryColor,
@@ -89,33 +92,38 @@ class _CreateShopState extends State<CreateShop> {
     if (validate(
         name: name, address: address, phone: phone, bank: bank, url: url)) {
       DialogBox.loading(context: context, message: 'กำลังสร้างร้าน');
-      var shop = new ShopData(
-          name: name,
-          address: address,
-          phone: phone,
-          bank: bank,
-          url: url,
-          open: days.days.toString(),
-          uid: user.uid);
-      await ShopService.create(shop: shop, user: user).then((res) {
-        DialogBox.close(context);
-        if (res != null && res.type == 'error') {
-          DialogBox.oneButton(
-              context: context,
-              message: res.message,
-              title: 'เกิดข้อผิดพลาด',
-              press: () {
-                DialogBox.close(context);
-              });
-        } else {
-          DialogBox.oneButton(
-              context: context,
-              message: 'สร้างร้านแล้ว กรุณารอเจ้าหน้าที่ตรวจสอบ',
-              title: 'สำเร็จ',
-              press: () {
-                DialogBox.close(context);
-                Navigator.pop(context);
-              });
+      await ImageService.upload(_imageFile.path).then((res) async {
+        if (res) {
+          //upload image success
+          var shop = new ShopData(
+              name: name,
+              address: address,
+              phone: phone,
+              bank: bank,
+              url: url,
+              open: days.days.toString(),
+              uid: user.uid);
+          await ShopService.create(shop: shop, user: user).then((res) {
+            DialogBox.close(context);
+            if (res != null && res.type == 'error') {
+              DialogBox.oneButton(
+                  context: context,
+                  message: res.message,
+                  title: 'เกิดข้อผิดพลาด',
+                  press: () {
+                    DialogBox.close(context);
+                  });
+            } else {
+              DialogBox.oneButton(
+                  context: context,
+                  message: 'สร้างร้านแล้ว กรุณารอเจ้าหน้าที่ตรวจสอบ',
+                  title: 'สำเร็จ',
+                  press: () {
+                    DialogBox.close(context);
+                    Navigator.pop(context);
+                  });
+            }
+          });
         }
       });
     }

@@ -1,6 +1,8 @@
 import 'package:charoenkrung_app/config/config.dart';
 import 'package:charoenkrung_app/data/shopData.dart';
 import 'package:charoenkrung_app/providers/menuProvider.dart';
+import 'package:charoenkrung_app/providers/productProvider.dart';
+import 'package:charoenkrung_app/screens/shop/components/body.dart';
 import 'package:charoenkrung_app/screens/shop/components/option.dart';
 import 'package:charoenkrung_app/utils/appBar.dart';
 import 'package:charoenkrung_app/utils/menuBar.dart';
@@ -17,20 +19,22 @@ class Shop extends StatelessWidget {
     return MultiProvider(
         providers: [
           ChangeNotifierProvider(
-              create: (_) => MenuProvider(selected: 0, menus: [
-                    'ออร์เดอร์',
-                    'อาหาร',
-                    'พรีออร์เดอร์',
-                    'โปรโมชั่น',
-                    'ตั้งค่าร้าน'
-                  ]))
+            create: (_) => MenuProvider(selected: 0, menus: [
+              'ออร์เดอร์',
+              'อาหาร',
+              'พรีออร์เดอร์',
+              'โปรโมชั่น',
+              'ตั้งค่าร้าน'
+            ]),
+          ),
+          ChangeNotifierProvider(create: (_) => ProductProvider())
         ],
         child: Scaffold(
-          backgroundColor: Config.accentColor,
+          backgroundColor: Config.lightColor,
           appBar: createAppBar(
-              color: Config.lightColor, context: context, title: shop.name),
+              color: Config.darkColor, context: context, title: shop.name),
           body: Column(
-            children: [MenuBar(), Options()],
+            children: [MenuBar(), Options(sid: shop.sid), Body()],
           ),
         ));
   }

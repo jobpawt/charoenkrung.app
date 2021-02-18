@@ -1,10 +1,15 @@
 import 'package:charoenkrung_app/config/config.dart';
 import 'package:charoenkrung_app/providers/menuProvider.dart';
+import 'package:charoenkrung_app/screens/shop/components/product/addProduct.dart';
 import 'package:charoenkrung_app/utils/button.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class Options extends StatelessWidget {
+  final String sid;
+
+  Options({this.sid});
+
   @override
   Widget build(BuildContext context) {
     var menu = Provider.of<MenuProvider>(context);
@@ -23,8 +28,16 @@ class Options extends StatelessWidget {
             createFlatButtonWithIcon(
                 text: 'เพิ่มรายการอาหาร',
                 icon: Icons.add,
-                color: Config.lightColor,
-                press: () => null)
+                color: Config.primaryColor,
+                press: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => AddProduct(
+                                sid: sid,
+                                product: null,
+                              )));
+                })
           ],
         );
         break;

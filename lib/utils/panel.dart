@@ -12,3 +12,23 @@ Widget createPanel({Widget child}) {
               child: child,
       );
 }
+
+Widget createItemPanel({Widget child}) {
+  return Container(
+    margin: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+    padding: EdgeInsets.all(Config.kPadding),
+    decoration: BoxDecoration(
+      color: Config.lightColor,
+      shape: BoxShape.rectangle,
+      boxShadow: [
+        BoxShadow(
+          color: Colors.grey,
+          blurRadius: 5,
+          spreadRadius: -1,
+          offset: Offset(2,2)
+        )
+      ]
+    ),
+    child: child,
+  );
+}

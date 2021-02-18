@@ -4,7 +4,7 @@ import 'dart:io';
 
 import 'package:image_picker/image_picker.dart';
 
-Widget createImageBox(File imageFile) {
+Widget createImageBox({File imageFile}) {
  return Container(
     margin: EdgeInsets.all(Config.kMargin),
     height: 200,
@@ -12,6 +12,20 @@ Widget createImageBox(File imageFile) {
         borderRadius: BorderRadius.all(Radius.circular(Config.kRadius)),
         image: DecorationImage(
             image: new FileImage(imageFile),
+            fit: BoxFit.fill
+        )
+    ),
+  );
+}
+
+Widget createImageBoxFromUrl({String url}) {
+  return Container(
+    margin: EdgeInsets.all(Config.kMargin),
+    height: 200,
+    decoration: BoxDecoration(
+        borderRadius: BorderRadius.all(Radius.circular(Config.kRadius)),
+        image: DecorationImage(
+            image: new NetworkImage(url),
             fit: BoxFit.fill
         )
     ),

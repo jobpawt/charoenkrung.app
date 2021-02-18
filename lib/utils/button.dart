@@ -34,7 +34,7 @@ Widget createFlatButtonWithIcon(
         children: [
           Icon(
             icon,
-            color: Config.lightColor,
+            color: color,
             size: 32,
           ),
           Text(
@@ -47,8 +47,7 @@ Widget createFlatButtonWithIcon(
 
 Widget createOutlineButton({Function press, Color color, String text}) {
   return Container(
-    margin: EdgeInsets.symmetric(
-        horizontal: Config.kMargin, vertical: Config.kPadding),
+    margin: EdgeInsets.symmetric(horizontal: Config.kMargin),
     child: SizedBox(
       height: 50,
       child: OutlineButton(

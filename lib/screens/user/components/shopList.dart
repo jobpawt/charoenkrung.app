@@ -3,6 +3,7 @@ import 'package:charoenkrung_app/data/shopData.dart';
 import 'package:charoenkrung_app/providers/shopProvider.dart';
 import 'package:charoenkrung_app/screens/shop/Shop.dart';
 import 'package:charoenkrung_app/services/shopService.dart';
+import 'package:charoenkrung_app/utils/panel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
@@ -42,20 +43,7 @@ class ShopItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-      padding: EdgeInsets.all(Config.kPadding),
-      decoration: BoxDecoration(
-          color: Config.lightColor,
-          shape: BoxShape.rectangle,
-          borderRadius: BorderRadius.circular(7),
-          boxShadow: [
-            BoxShadow(
-                color: Colors.grey,
-                blurRadius: 5,
-                spreadRadius: -1,
-                offset: Offset(2, 2))
-          ]),
+    return createItemPanel(
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
