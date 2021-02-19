@@ -12,6 +12,7 @@ AppBar createAppBar({BuildContext context, String title, Color color}) {
           icon: SvgPicture.asset(
             'assets/Myprevious.svg',
             color: color,
+            width: 32,
           ),
           onPressed: () => Navigator.pop(context)));
 }

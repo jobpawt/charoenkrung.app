@@ -1,6 +1,7 @@
 import 'package:charoenkrung_app/config/config.dart';
 import 'package:charoenkrung_app/data/shopData.dart';
 import 'package:charoenkrung_app/providers/menuProvider.dart';
+import 'package:charoenkrung_app/providers/preOrderProvider.dart';
 import 'package:charoenkrung_app/providers/productProvider.dart';
 import 'package:charoenkrung_app/screens/shop/components/body.dart';
 import 'package:charoenkrung_app/screens/shop/components/option.dart';
@@ -27,14 +28,21 @@ class Shop extends StatelessWidget {
               'ตั้งค่าร้าน'
             ]),
           ),
-          ChangeNotifierProvider(create: (_) => ProductProvider())
+          ChangeNotifierProvider(create: (_) => ProductProvider()),
+          ChangeNotifierProvider(create: (_) => PreOrderProvider())
         ],
         child: Scaffold(
           backgroundColor: Colors.white,
           appBar: createAppBar(
               color: Config.darkColor, context: context, title: shop.name),
           body: Column(
-            children: [MenuBar(), Options(sid: shop.sid), Body(sid: shop.sid,)],
+            children: [
+              MenuBar(),
+              Options(sid: shop.sid),
+              Body(
+                sid: shop.sid,
+              )
+            ],
           ),
         ));
   }

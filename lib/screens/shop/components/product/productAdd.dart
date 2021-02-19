@@ -274,7 +274,6 @@ class _ProductAddState extends State<ProductAdd> {
                   });
             } else {
               //create failed show error to dialog box
-              print(product.toJson());
               DialogBox.oneButton(
                   context: context,
                   title: 'เกิดข้อผิดพลาด',

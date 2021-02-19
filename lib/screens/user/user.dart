@@ -63,8 +63,11 @@ class _UserState extends State<User> {
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               IconButton(
-                  icon: SvgPicture.asset('assets/email.svg',
-                      color: Config.lightColor),
+                  icon: SvgPicture.asset(
+                    'assets/email.svg',
+                    color: Config.lightColor,
+                    width: 24,
+                  ),
                   onPressed: null),
               Text(
                 '${data.email}',
@@ -79,6 +82,7 @@ class _UserState extends State<User> {
                   icon: SvgPicture.asset(
                     'assets/phone.svg',
                     color: Config.lightColor,
+                    width: 24,
                   ),
                   onPressed: null),
               Text(

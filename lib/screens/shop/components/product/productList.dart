@@ -20,9 +20,10 @@ class _ProductListState extends State<ProductList> {
         .where((element) => element.sid == widget.sid)
         .toList();
     return ListView.builder(
-        itemCount: myProductList.length,
-        itemBuilder: (context, index) => ProductItem(
-              product: myProductList[index],
-            ));
+      itemCount: myProductList.length,
+      itemBuilder: (context, index) => ProductItem(
+        product: myProductList[index],
+      ),
+    );
   }
 }

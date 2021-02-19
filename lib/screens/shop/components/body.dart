@@ -1,6 +1,9 @@
 import 'package:charoenkrung_app/providers/menuProvider.dart';
+import 'package:charoenkrung_app/providers/preOrderProvider.dart';
 import 'package:charoenkrung_app/providers/productProvider.dart';
+import 'package:charoenkrung_app/screens/shop/components/preorder/preOrderList.dart';
 import 'package:charoenkrung_app/screens/shop/components/product/productList.dart';
+import 'package:charoenkrung_app/services/preOrderService.dart';
 import 'package:charoenkrung_app/services/productService.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -19,6 +22,7 @@ class _BodyState extends State<Body> {
   void initState() {
     super.initState();
     _getAllProduct();
+    _getAllPreOrder();
   }
 
   @override
@@ -36,7 +40,7 @@ class _BodyState extends State<Body> {
         return ProductList(sid: widget.sid);
         break;
       case 'พรีออร์เดอร์':
-        return Container();
+        return PreOrderList(sid: widget.sid);
         break;
       case 'โปรโมชั่น':
         return Container();
@@ -59,4 +63,12 @@ class _BodyState extends State<Body> {
     });
   }
 
+  _getAllPreOrder() async {
+    await PreOrderService.getAll().then((preOrders) {
+      if (preOrders.type != 'error') {
+        Provider.of<PreOrderProvider>(context, listen: false)
+            .addAll(preOrders.data);
+      }
+    });
+  }
 }

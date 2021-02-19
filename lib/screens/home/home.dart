@@ -62,6 +62,7 @@ class _HomeState extends State<Home> {
                       icon: SvgPicture.asset(
                         'assets/Myuser.svg',
                         color: Config.darkColor,
+                        width: 32,
                       ),
                       onPressed: () => Navigator.push(context,
                           MaterialPageRoute(builder: (context) => Login())))
@@ -71,11 +72,15 @@ class _HomeState extends State<Home> {
                 children: [
                   IconButton(
                       icon: SvgPicture.asset('assets/Mychat.svg',
-                          color: Config.darkColor),
+                          color: Config.darkColor,
+                          width: 32,
+                      ),
                       onPressed: null),
                   IconButton(
                       icon: SvgPicture.asset('assets/Mymenu.svg',
-                          color: Config.darkColor),
+                          color: Config.darkColor,
+                          width: 32,
+                      ),
                       onPressed: () => Navigator.push(context,
                           MaterialPageRoute(builder: (context) => User())))
                 ],

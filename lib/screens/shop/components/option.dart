@@ -1,5 +1,8 @@
 import 'package:charoenkrung_app/config/config.dart';
 import 'package:charoenkrung_app/providers/menuProvider.dart';
+import 'package:charoenkrung_app/providers/preOrderProvider.dart';
+import 'package:charoenkrung_app/providers/productProvider.dart';
+import 'package:charoenkrung_app/screens/shop/components/preorder/preOrderAdd.dart';
 import 'package:charoenkrung_app/screens/shop/components/product/productAdd.dart';
 import 'package:charoenkrung_app/utils/button.dart';
 import 'package:flutter/material.dart';
@@ -13,10 +16,20 @@ class Options extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var menu = Provider.of<MenuProvider>(context);
-    return buildOptions(context, menu.menu);
+    var productProvider = Provider.of<ProductProvider>(context);
+    var preOrderProvider = Provider.of<PreOrderProvider>(context);
+    return buildOptions(
+        context: context,
+        menu: menu.menu,
+        productProvider: productProvider,
+        preOrderProvider: preOrderProvider);
   }
 
-  Widget buildOptions(BuildContext context, String menu) {
+  Widget buildOptions(
+      {BuildContext context,
+      String menu,
+      ProductProvider productProvider,
+      PreOrderProvider preOrderProvider}) {
     switch (menu) {
       case 'ออร์เดอร์':
         return Container();
@@ -36,6 +49,7 @@ class Options extends StatelessWidget {
                           builder: (context) => ProductAdd(
                                 sid: sid,
                                 product: null,
+                                provider: productProvider,
                               )));
                 })
           ],
@@ -48,8 +62,16 @@ class Options extends StatelessWidget {
             createFlatButtonWithIcon(
                 text: 'เพิ่มรายการพรีออร์เดอร์',
                 icon: Icons.add,
-                color: Config.lightColor,
-                press: () => null)
+                color: Config.primaryColor,
+                press: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => PreOrderAdd(
+                        sid: sid,
+                        preOrder: null,
+                        provider: preOrderProvider,
+                      ),
+                    )))
           ],
         );
         break;
