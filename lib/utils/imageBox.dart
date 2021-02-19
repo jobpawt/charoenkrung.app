@@ -25,7 +25,7 @@ Widget createImageBoxFromUrl({String url}) {
     decoration: BoxDecoration(
         borderRadius: BorderRadius.all(Radius.circular(Config.kRadius)),
         image: DecorationImage(
-            image: new NetworkImage(url),
+            image: new NetworkImage('${Config.IMAGE}/$url'),
             fit: BoxFit.fill
         )
     ),

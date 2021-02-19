@@ -1,16 +1,19 @@
 import 'package:charoenkrung_app/config/config.dart';
 import 'package:charoenkrung_app/data/productData.dart';
+import 'package:charoenkrung_app/providers/productProvider.dart';
+import 'package:charoenkrung_app/screens/shop/components/product/addProduct.dart';
 import 'package:charoenkrung_app/utils/panel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:provider/provider.dart';
 
 class ProductItem extends StatelessWidget {
   final ProductData product;
-
   ProductItem({this.product});
 
   @override
   Widget build(BuildContext context) {
+    var provider = Provider.of<ProductProvider>(context);
     return createItemPanel(
         child: Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -60,7 +63,16 @@ class ProductItem extends StatelessWidget {
                   color: Config.primaryColor,
                   height: 30,
                 ),
-                onPressed: () => null)
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => AddProduct(
+                                product: product,
+                                sid: product.sid,
+                                provider: provider,
+                              )));
+                })
           ],
         )
       ],

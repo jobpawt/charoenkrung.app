@@ -19,4 +19,10 @@ class ProductProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  void edit(ProductData product) {
+    var index = products.indexWhere((element) => element.pid == product.pid);
+    products[index] = product;
+    notifyListeners();
+  }
+
 }

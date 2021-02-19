@@ -30,7 +30,7 @@ class Shop extends StatelessWidget {
           ChangeNotifierProvider(create: (_) => ProductProvider())
         ],
         child: Scaffold(
-          backgroundColor: Config.lightColor,
+          backgroundColor: Colors.white,
           appBar: createAppBar(
               color: Config.darkColor, context: context, title: shop.name),
           body: Column(

@@ -1,5 +1,6 @@
 import 'package:charoenkrung_app/config/config.dart';
 import 'package:charoenkrung_app/data/productData.dart';
+import 'package:charoenkrung_app/providers/productProvider.dart';
 import 'package:charoenkrung_app/providers/userProvider.dart';
 import 'package:charoenkrung_app/services/imageService.dart';
 import 'package:charoenkrung_app/services/productService.dart';
@@ -18,8 +19,9 @@ import 'dart:io';
 class AddProduct extends StatefulWidget {
   final String sid;
   final ProductData product;
+  final ProductProvider provider;
 
-  AddProduct({this.sid, this.product});
+  AddProduct({this.sid, this.product, this.provider});
 
   @override
   _AddProductState createState() => _AddProductState();
@@ -50,7 +52,7 @@ class _AddProductState extends State<AddProduct> {
         _stock.text = widget.product.stock.toString();
         url = widget.product.url;
         pid = widget.product.pid;
-        typeSelectedIndex = widget.product.type_id + 1;
+        typeSelectedIndex = widget.product.type_id - 1;
       });
     }
     super.initState();
@@ -59,6 +61,7 @@ class _AddProductState extends State<AddProduct> {
   @override
   Widget build(BuildContext context) {
     var user = Provider.of<UserProvider>(context);
+
     return Scaffold(
         backgroundColor: Config.accentColor,
         appBar: createAppBar(
@@ -82,7 +85,7 @@ class _AddProductState extends State<AddProduct> {
                 text: 'จำนวนสต๊อก',
                 type: EditTextType.number,
                 controller: _stock),
-            buildButton(context, user.user.token),
+            buildButton(context, user.user.token, widget.provider),
             SizedBox(
               height: Config.kMargin,
             )
@@ -144,15 +147,17 @@ class _AddProductState extends State<AddProduct> {
     );
   }
 
-  Widget buildButton(BuildContext context, String token) {
+  Widget buildButton(BuildContext context, String token, ProductProvider provider) {
     if (widget.product == null) {
       return createButton(
           text: 'สร้าง',
           color: Config.primaryColor,
-          press: () => _create(context, token));
+          press: () => _create(context, token, provider));
     } else {
       return createButton(
-          text: 'แก้ไข', color: Config.primaryColor, press: () => null);
+          text: 'แก้ไข',
+          color: Config.primaryColor,
+          press: () => _edit(context, token, provider));
     }
   }
 
@@ -166,7 +171,72 @@ class _AddProductState extends State<AddProduct> {
     }
   }
 
-  _create(BuildContext context, String token) async {
+  //edit product
+  _edit(BuildContext context, String token, ProductProvider provider) async {
+    var newProduct = new ProductData();
+    newProduct.name = _name.text.trim();
+    newProduct.description = _description.text.trim();
+    newProduct.price = int.parse(_price.text.trim());
+    newProduct.stock = int.parse(_stock.text.trim());
+    newProduct.type_id = typeSelectedIndex + 1;
+    newProduct.sid = widget.sid.trim();
+    newProduct.pid = widget.product.pid;
+    newProduct.status = widget.product.status;
+    newProduct.url = url;
+
+    DialogBox.loading(context: context, message: 'กำลังแก้ไข');
+    if (imageFile != null) {
+      await ImageService.upload(imageFile.path).then((value) {
+        if (value) {
+          setState(() {
+            url = '/files/' + imageFile.path.split('/').last;
+            newProduct.url = url;
+          });
+        } else {
+          DialogBox.close(context);
+          DialogBox.oneButton(
+              context: context,
+              title: 'เกิดข้อผิดพลาด',
+              message: 'ไม่สามารถอัปโหลดรูปภาพได้',
+              press: () => DialogBox.close(context));
+        }
+      });
+    }
+
+    if (validate(
+        context: context,
+        name: newProduct.name,
+        description: newProduct.description,
+        price: newProduct.price.toString(),
+        stock: newProduct.stock.toString(),
+        url: newProduct.url)) {
+      await ProductService.edit(newProduct, token).then((value) {
+        DialogBox.close(context);
+        if (value == null) {
+          //edit file success
+          provider.edit(newProduct);
+          DialogBox.oneButton(
+              context: context,
+              title: 'สำเร็จ',
+              message: 'แก้ไขรายการสำเร็จ',
+              press: () {
+
+                DialogBox.close(context);
+                Navigator.pop(context);
+              });
+        } else {
+          DialogBox.oneButton(
+              context: context,
+              title: 'เกิดข้อผิดพลาด',
+              message: value.message,
+              press: () => DialogBox.close(context));
+        }
+      });
+    }
+  }
+
+  //add product
+  _create(BuildContext context, String token, ProductProvider provider) async {
     var name = _name.text.trim();
     var description = _description.text.trim();
     var price = _price.text.trim();
@@ -193,6 +263,7 @@ class _AddProductState extends State<AddProduct> {
             DialogBox.close(context);
             if (value == null) {
               //create finished
+              provider.add(product);
               DialogBox.oneButton(
                   context: context,
                   title: 'สำเร็จ',

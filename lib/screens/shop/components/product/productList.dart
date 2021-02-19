@@ -5,6 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class ProductList extends StatefulWidget {
+  final String sid;
+
+  ProductList({this.sid});
+
   @override
   _ProductListState createState() => _ProductListState();
 }
