@@ -17,9 +17,6 @@ class _ShopListState extends State<ShopList> {
   @override
   Widget build(BuildContext context) {
     var shop = Provider.of<ShopProvider>(context);
-    if (shop.shops.length == 0) {
-      getAllShop(shop);
-    }
 
     return ListView.builder(
         scrollDirection: Axis.vertical,
@@ -29,11 +26,6 @@ class _ShopListState extends State<ShopList> {
             ));
   }
 
-  getAllShop(ShopProvider shop) async {
-    await ShopService.getAll().then((res) {
-      shop.addAll(res.data);
-    });
-  }
 }
 
 class ShopItem extends StatelessWidget {
