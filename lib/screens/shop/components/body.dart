@@ -1,5 +1,7 @@
 import 'package:charoenkrung_app/providers/menuProvider.dart';
+import 'package:charoenkrung_app/providers/productProvider.dart';
 import 'package:charoenkrung_app/screens/shop/components/product/productList.dart';
+import 'package:charoenkrung_app/services/productService.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -9,6 +11,12 @@ class Body extends StatefulWidget {
 }
 
 class _BodyState extends State<Body> {
+  @override
+  void initState() {
+    super.initState();
+    _getAllProduct();
+  }
+
   @override
   Widget build(BuildContext context) {
     var menu = Provider.of<MenuProvider>(context);
@@ -37,4 +45,14 @@ class _BodyState extends State<Body> {
         break;
     }
   }
+
+  _getAllProduct() async {
+    await ProductService.getAll().then((products) {
+      if (products.type != 'error') {
+        Provider.of<ProductProvider>(context, listen: false)
+            .addAll(products.data);
+      }
+    });
+  }
+
 }

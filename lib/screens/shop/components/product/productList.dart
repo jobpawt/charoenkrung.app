@@ -17,10 +17,11 @@ class _ProductListState extends State<ProductList> {
   @override
   Widget build(BuildContext context) {
     var productProvider = Provider.of<ProductProvider>(context);
-
+    /*
     if (productProvider.products.length == 0) {
       _getAllProduct(productProvider);
     }
+     */
 
     return ListView.builder(
         itemCount: productProvider.products.length,

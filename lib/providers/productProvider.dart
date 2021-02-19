@@ -9,7 +9,8 @@ class ProductProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void remove(int index) {
+  void remove(ProductData product) {
+    var index = products.indexWhere((element) => element.pid == product.pid);
     products.removeAt(index);
     notifyListeners();
   }

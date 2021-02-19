@@ -9,6 +9,7 @@ import 'package:provider/provider.dart';
 
 class ProductItem extends StatelessWidget {
   final ProductData product;
+
   ProductItem({this.product});
 
   @override
@@ -56,7 +57,7 @@ class ProductItem extends StatelessWidget {
                   color: Config.primaryColor,
                   height: 25,
                 ),
-                onPressed: () => null),
+                onPressed: () => _delete(provider, product)),
             IconButton(
                 icon: SvgPicture.asset(
                   'assets/edit.svg',
@@ -77,5 +78,9 @@ class ProductItem extends StatelessWidget {
         )
       ],
     ));
+  }
+
+  _delete(ProductProvider provider, ProductData product) {
+    provider.remove(product);
   }
 }
