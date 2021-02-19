@@ -1,6 +1,6 @@
 import 'package:charoenkrung_app/config/config.dart';
 import 'package:charoenkrung_app/providers/menuProvider.dart';
-import 'package:charoenkrung_app/screens/shop/create/create.dart';
+import 'package:charoenkrung_app/screens/user/components/shop/shopAdd.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -30,7 +30,7 @@ class Options extends StatelessWidget {
               children: [
                 FlatButton(
                     onPressed: () => Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => CreateShop())),
+                        MaterialPageRoute(builder: (context) => ShopAdd())),
                     child: Text(
                       'สร้างร้าน',
                       style:

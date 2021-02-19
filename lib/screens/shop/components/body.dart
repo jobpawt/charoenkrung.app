@@ -6,6 +6,10 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class Body extends StatefulWidget {
+  final String sid;
+
+  Body({this.sid});
+
   @override
   _BodyState createState() => _BodyState();
 }
@@ -29,7 +33,7 @@ class _BodyState extends State<Body> {
         return Container();
         break;
       case 'อาหาร':
-        return ProductList();
+        return ProductList(sid: widget.sid);
         break;
       case 'พรีออร์เดอร์':
         return Container();

@@ -29,7 +29,10 @@ class ProductService {
       List<ProductData> products = new List();
       data.forEach((element) {
         var product = ProductData.fromJson(element);
-        products.add(product);
+        // add product to products when status is not equal DELETED
+        if(product.status != 'DELETED'){
+          products.add(product);
+        }
       });
       return ServerResponse(data: products);
     } else {
@@ -39,12 +42,26 @@ class ProductService {
 
   static Future<ServerResponse> edit(ProductData product, String token) async {
     var response =
-        await Http.patch('${Config.DATABASE}/product/edit/${product.pid}',
-            headers: <String, String>{
-              'Content-Type': 'application/json; charset=UTF-8',
-              'Authorization': 'Bearer $token'
-            },
-            body: jsonEncode(product.toJson()));
+    await Http.patch('${Config.DATABASE}/product/edit/${product.pid}',
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+          'Authorization': 'Bearer $token'
+        },
+        body: jsonEncode(product.toJson()));
+    if (response.statusCode == 200) {
+      return null;
+    } else {
+      return ServerResponse.fromJson(json.decode(response.body));
+    }
+  }
+
+  static Future<ServerResponse> delete(ProductData data, String token) async {
+    var response = await Http.delete(
+        '${Config.DATABASE}/product/delete/${data.pid}',
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+          'Authorization': 'Bearer $token'
+        });
     if (response.statusCode == 200) {
       return null;
     } else {

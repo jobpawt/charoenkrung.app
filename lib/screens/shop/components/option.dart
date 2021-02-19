@@ -1,6 +1,6 @@
 import 'package:charoenkrung_app/config/config.dart';
 import 'package:charoenkrung_app/providers/menuProvider.dart';
-import 'package:charoenkrung_app/screens/shop/components/product/addProduct.dart';
+import 'package:charoenkrung_app/screens/shop/components/product/productAdd.dart';
 import 'package:charoenkrung_app/utils/button.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -33,7 +33,7 @@ class Options extends StatelessWidget {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => AddProduct(
+                          builder: (context) => ProductAdd(
                                 sid: sid,
                                 product: null,
                               )));

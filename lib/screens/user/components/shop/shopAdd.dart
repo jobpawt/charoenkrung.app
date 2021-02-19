@@ -19,12 +19,12 @@ import 'dart:io';
 
 import 'package:provider/provider.dart';
 
-class CreateShop extends StatefulWidget {
+class ShopAdd extends StatefulWidget {
   @override
-  _CreateShopState createState() => _CreateShopState();
+  _ShopAddState createState() => _ShopAddState();
 }
 
-class _CreateShopState extends State<CreateShop> {
+class _ShopAddState extends State<ShopAdd> {
   final picker = ImagePicker();
   final days = new DayData();
   final _name = TextEditingController();

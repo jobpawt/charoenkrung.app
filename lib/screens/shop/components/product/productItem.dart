@@ -1,7 +1,10 @@
 import 'package:charoenkrung_app/config/config.dart';
 import 'package:charoenkrung_app/data/productData.dart';
 import 'package:charoenkrung_app/providers/productProvider.dart';
-import 'package:charoenkrung_app/screens/shop/components/product/addProduct.dart';
+import 'package:charoenkrung_app/providers/userProvider.dart';
+import 'package:charoenkrung_app/screens/shop/components/product/productAdd.dart';
+import 'package:charoenkrung_app/services/productService.dart';
+import 'package:charoenkrung_app/utils/dialogBox.dart';
 import 'package:charoenkrung_app/utils/panel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -15,6 +18,7 @@ class ProductItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var provider = Provider.of<ProductProvider>(context);
+    var user = Provider.of<UserProvider>(context);
     return createItemPanel(
         child: Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -57,7 +61,11 @@ class ProductItem extends StatelessWidget {
                   color: Config.primaryColor,
                   height: 25,
                 ),
-                onPressed: () => _delete(provider, product)),
+                onPressed: () => _delete(
+                    context: context,
+                    product: product,
+                    token: user.user.token,
+                    provider: provider)),
             IconButton(
                 icon: SvgPicture.asset(
                   'assets/edit.svg',
@@ -68,7 +76,7 @@ class ProductItem extends StatelessWidget {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => AddProduct(
+                          builder: (context) => ProductAdd(
                                 product: product,
                                 sid: product.sid,
                                 provider: provider,
@@ -80,7 +88,23 @@ class ProductItem extends StatelessWidget {
     ));
   }
 
-  _delete(ProductProvider provider, ProductData product) {
-    provider.remove(product);
+  _delete(
+      {ProductProvider provider,
+      ProductData product,
+      String token,
+      BuildContext context}) async {
+    DialogBox.loading(context: context, message: 'กำลังดำเนินการ');
+    await ProductService.delete(product, token).then((value) {
+      DialogBox.close(context);
+      if (value == null) {
+        provider.remove(product);
+      } else {
+        DialogBox.oneButton(
+            context: context,
+            title: 'เกิดข้อผิดพลาด',
+            message: value.message,
+            press: () => DialogBox.close(context));
+      }
+    });
   }
 }

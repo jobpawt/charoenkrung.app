@@ -16,18 +16,18 @@ import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import 'dart:io';
 
-class AddProduct extends StatefulWidget {
+class ProductAdd extends StatefulWidget {
   final String sid;
   final ProductData product;
   final ProductProvider provider;
 
-  AddProduct({this.sid, this.product, this.provider});
+  ProductAdd({this.sid, this.product, this.provider});
 
   @override
-  _AddProductState createState() => _AddProductState();
+  _ProductAddState createState() => _ProductAddState();
 }
 
-class _AddProductState extends State<AddProduct> {
+class _ProductAddState extends State<ProductAdd> {
   final _name = TextEditingController();
   final _description = TextEditingController();
   final _price = TextEditingController();
@@ -162,7 +162,7 @@ class _AddProductState extends State<AddProduct> {
   }
 
   Widget showImage() {
-    if (imageFile != null && widget.product == null) {
+    if (imageFile != null) {
       return createImageBox(imageFile: imageFile);
     } else if (widget.product != null) {
       return createImageBoxFromUrl(url: url);
@@ -189,7 +189,7 @@ class _AddProductState extends State<AddProduct> {
       await ImageService.upload(imageFile.path).then((value) {
         if (value) {
           setState(() {
-            url = '/files/' + imageFile.path.split('/').last;
+            url = 'files/' + imageFile.path.split('/').last;
             newProduct.url = url;
           });
         } else {

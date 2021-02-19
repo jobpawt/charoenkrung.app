@@ -34,7 +34,7 @@ class Shop extends StatelessWidget {
           appBar: createAppBar(
               color: Config.darkColor, context: context, title: shop.name),
           body: Column(
-            children: [MenuBar(), Options(sid: shop.sid), Body()],
+            children: [MenuBar(), Options(sid: shop.sid), Body(sid: shop.sid,)],
           ),
         ));
   }

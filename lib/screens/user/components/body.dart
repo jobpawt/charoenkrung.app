@@ -1,6 +1,6 @@
 import 'package:charoenkrung_app/providers/menuProvider.dart';
 import 'package:charoenkrung_app/providers/shopProvider.dart';
-import 'package:charoenkrung_app/screens/user/components/shopList.dart';
+import 'package:charoenkrung_app/screens/user/components/shop/shopList.dart';
 import 'package:charoenkrung_app/services/shopService.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';

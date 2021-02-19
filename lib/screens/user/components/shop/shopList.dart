@@ -1,6 +1,7 @@
 import 'package:charoenkrung_app/config/config.dart';
 import 'package:charoenkrung_app/data/shopData.dart';
 import 'package:charoenkrung_app/providers/shopProvider.dart';
+import 'package:charoenkrung_app/providers/userProvider.dart';
 import 'package:charoenkrung_app/screens/shop/Shop.dart';
 import 'package:charoenkrung_app/services/shopService.dart';
 import 'package:charoenkrung_app/utils/panel.dart';
@@ -17,15 +18,17 @@ class _ShopListState extends State<ShopList> {
   @override
   Widget build(BuildContext context) {
     var shop = Provider.of<ShopProvider>(context);
+    var user = Provider.of<UserProvider>(context);
+    var myShopList =
+        shop.shops.where((element) => element.uid == user.user.uid).toList();
 
     return ListView.builder(
         scrollDirection: Axis.vertical,
-        itemCount: shop.shops.length,
+        itemCount: myShopList.length,
         itemBuilder: (context, index) => ShopItem(
-              shop: shop.shops[index],
+              shop: myShopList[index],
             ));
   }
-
 }
 
 class ShopItem extends StatelessWidget {
@@ -70,14 +73,14 @@ class ShopItem extends StatelessWidget {
                     color: Config.primaryColor,
                     height: 25,
                   ),
-                  onPressed: () => null),
+                  onPressed: () => _delete(context, shop)),
               IconButton(
                   icon: SvgPicture.asset(
                     'assets/enter.svg',
                     color: Config.primaryColor,
                     height: 30,
                   ),
-                  onPressed: () => enterToShop(context, shop))
+                  onPressed: () => _goToShop(context, shop))
             ],
           )
         ],
@@ -85,7 +88,11 @@ class ShopItem extends StatelessWidget {
     );
   }
 
-  enterToShop(BuildContext context, ShopData shop) {
+  _delete(BuildContext context, ShopData shop) {
+    Provider.of<ShopProvider>(context, listen: false).remove(shop);
+  }
+
+  _goToShop(BuildContext context, ShopData shop) {
     Navigator.push(
         context, MaterialPageRoute(builder: (context) => Shop(shop: shop)));
   }

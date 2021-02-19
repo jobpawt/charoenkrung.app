@@ -18,12 +18,14 @@ class ShopProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void delete(int index) {
+  void remove(ShopData shop) {
+    var index = shops.indexWhere((element) => element.sid == shop.sid);
     shops.removeAt(index);
     notifyListeners();
   }
 
-  void edit(ShopData shop, int index) {
+  void edit(ShopData shop) {
+    var index = shops.indexWhere((element) => element.sid == shop.sid);
     shops[index] = shop;
     notifyListeners();
   }
@@ -31,5 +33,4 @@ class ShopProvider extends ChangeNotifier {
   List<ShopData> get shopList {
     return this.shops;
   }
-
 }
