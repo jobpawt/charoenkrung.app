@@ -3,6 +3,7 @@ import 'package:charoenkrung_app/data/shopData.dart';
 import 'package:charoenkrung_app/providers/menuProvider.dart';
 import 'package:charoenkrung_app/providers/preOrderProvider.dart';
 import 'package:charoenkrung_app/providers/productProvider.dart';
+import 'package:charoenkrung_app/providers/promotionProvider.dart';
 import 'package:charoenkrung_app/screens/shop/components/body.dart';
 import 'package:charoenkrung_app/screens/shop/components/option.dart';
 import 'package:charoenkrung_app/utils/appBar.dart';
@@ -29,7 +30,8 @@ class Shop extends StatelessWidget {
             ]),
           ),
           ChangeNotifierProvider(create: (_) => ProductProvider()),
-          ChangeNotifierProvider(create: (_) => PreOrderProvider())
+          ChangeNotifierProvider(create: (_) => PreOrderProvider()),
+          ChangeNotifierProvider(create: (_) => PromotionProvider())
         ],
         child: Scaffold(
           backgroundColor: Colors.white,

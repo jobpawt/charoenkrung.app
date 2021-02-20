@@ -64,7 +64,9 @@ class _PreOrderAddState extends State<PreOrderAdd> {
       backgroundColor: Config.accentColor,
       appBar: createAppBar(
           context: context,
-          title: 'เพิ่มรายการพรีออร์เดอร์',
+          title: widget.preOrder == null
+              ? 'เพิ่มรายการพรีออร์เดอร์'
+              : 'แก้ไขพรีออร์เดอร์',
           color: Config.lightColor),
       body: createPanel(
           child: ListView(

@@ -1,10 +1,13 @@
 import 'package:charoenkrung_app/providers/menuProvider.dart';
 import 'package:charoenkrung_app/providers/preOrderProvider.dart';
 import 'package:charoenkrung_app/providers/productProvider.dart';
+import 'package:charoenkrung_app/providers/promotionProvider.dart';
 import 'package:charoenkrung_app/screens/shop/components/preorder/preOrderList.dart';
 import 'package:charoenkrung_app/screens/shop/components/product/productList.dart';
+import 'package:charoenkrung_app/screens/shop/components/promotion/promotionList.dart';
 import 'package:charoenkrung_app/services/preOrderService.dart';
 import 'package:charoenkrung_app/services/productService.dart';
+import 'package:charoenkrung_app/services/promotionService.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -23,6 +26,7 @@ class _BodyState extends State<Body> {
     super.initState();
     _getAllProduct();
     _getAllPreOrder();
+    _getAllPromotions();
   }
 
   @override
@@ -43,7 +47,7 @@ class _BodyState extends State<Body> {
         return PreOrderList(sid: widget.sid);
         break;
       case 'โปรโมชั่น':
-        return Container();
+        return PromotionList(sid: widget.sid);
         break;
       case 'ตั้งค่าร้าน':
         return Container();
@@ -57,8 +61,10 @@ class _BodyState extends State<Body> {
   _getAllProduct() async {
     await ProductService.getAll().then((products) {
       if (products.type != 'error') {
-        Provider.of<ProductProvider>(context, listen: false)
-            .addAll(products.data);
+        Provider.of<ProductProvider>(context, listen: false).addAll(products
+            .data
+            .where((product) => product.sid == widget.sid)
+            .toList());
       }
     });
   }
@@ -66,8 +72,19 @@ class _BodyState extends State<Body> {
   _getAllPreOrder() async {
     await PreOrderService.getAll().then((preOrders) {
       if (preOrders.type != 'error') {
-        Provider.of<PreOrderProvider>(context, listen: false)
-            .addAll(preOrders.data);
+        Provider.of<PreOrderProvider>(context, listen: false).addAll(preOrders
+            .data
+            .where((preOrder) => preOrder.sid == widget.sid)
+            .toList());
+      }
+    });
+  }
+
+  _getAllPromotions() async {
+    await PromotionService.getAll().then((promotions) {
+      if (promotions.type != 'error') {
+        Provider.of<PromotionProvider>(context, listen: false)
+            .addAll(promotions.data);
       }
     });
   }

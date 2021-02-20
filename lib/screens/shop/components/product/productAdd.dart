@@ -66,7 +66,9 @@ class _ProductAddState extends State<ProductAdd> {
         backgroundColor: Config.accentColor,
         appBar: createAppBar(
             color: Config.lightColor,
-            title: 'เพิ่มรายการอาหาร',
+            title: widget.product == null
+                ? 'เพิ่มรายการอาหาร'
+                : 'แก้ไขรายการอาหาร',
             context: context),
         body: createPanel(
             child: ListView(
@@ -147,7 +149,8 @@ class _ProductAddState extends State<ProductAdd> {
     );
   }
 
-  Widget buildButton(BuildContext context, String token, ProductProvider provider) {
+  Widget buildButton(
+      BuildContext context, String token, ProductProvider provider) {
     if (widget.product == null) {
       return createButton(
           text: 'สร้าง',
@@ -220,7 +223,6 @@ class _ProductAddState extends State<ProductAdd> {
               title: 'สำเร็จ',
               message: 'แก้ไขรายการสำเร็จ',
               press: () {
-
                 DialogBox.close(context);
                 Navigator.pop(context);
               });

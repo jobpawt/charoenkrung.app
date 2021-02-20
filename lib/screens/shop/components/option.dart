@@ -2,8 +2,10 @@ import 'package:charoenkrung_app/config/config.dart';
 import 'package:charoenkrung_app/providers/menuProvider.dart';
 import 'package:charoenkrung_app/providers/preOrderProvider.dart';
 import 'package:charoenkrung_app/providers/productProvider.dart';
+import 'package:charoenkrung_app/providers/promotionProvider.dart';
 import 'package:charoenkrung_app/screens/shop/components/preorder/preOrderAdd.dart';
 import 'package:charoenkrung_app/screens/shop/components/product/productAdd.dart';
+import 'package:charoenkrung_app/screens/shop/components/promotion/promotionAdd.dart';
 import 'package:charoenkrung_app/utils/button.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -16,20 +18,26 @@ class Options extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var menu = Provider.of<MenuProvider>(context);
-    var productProvider = Provider.of<ProductProvider>(context);
-    var preOrderProvider = Provider.of<PreOrderProvider>(context);
+    var productProvider = Provider.of<ProductProvider>(context, listen: false);
+    var preOrderProvider =
+        Provider.of<PreOrderProvider>(context, listen: false);
+    var promotionProvider =
+        Provider.of<PromotionProvider>(context, listen: false);
+
     return buildOptions(
         context: context,
         menu: menu.menu,
         productProvider: productProvider,
-        preOrderProvider: preOrderProvider);
+        preOrderProvider: preOrderProvider,
+        promotionProvider: promotionProvider);
   }
 
   Widget buildOptions(
       {BuildContext context,
       String menu,
       ProductProvider productProvider,
-      PreOrderProvider preOrderProvider}) {
+      PreOrderProvider preOrderProvider,
+      PromotionProvider promotionProvider}) {
     switch (menu) {
       case 'ออร์เดอร์':
         return Container();
@@ -82,8 +90,14 @@ class Options extends StatelessWidget {
             createFlatButtonWithIcon(
                 text: 'สร้างโปรโมชั่น',
                 icon: Icons.add,
-                color: Config.lightColor,
-                press: () => null)
+                color: Config.primaryColor,
+                press: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => PromotionAdd(
+                            productList: productProvider.products,
+                            promotion: null,
+                            provider: promotionProvider))))
           ],
         );
         break;
