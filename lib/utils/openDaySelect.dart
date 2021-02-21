@@ -8,13 +8,17 @@ class OpenDaySelect extends StatefulWidget {
   OpenDaySelect({this.days});
 
   @override
-  _OpenDaySelectState createState() => _OpenDaySelectState(days: days);
+  _OpenDaySelectState createState() => _OpenDaySelectState();
 }
 
 class _OpenDaySelectState extends State<OpenDaySelect> {
-  final DayData days;
+  Map<String, bool> openDays;
 
-  _OpenDaySelectState({this.days});
+  @override
+  void initState() {
+    openDays = widget.days.toJson();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -29,17 +33,16 @@ class _OpenDaySelectState extends State<OpenDaySelect> {
                 style: Theme.of(context).textTheme.subtitle2),
           ),
           GridView.count(
-            shrinkWrap: true,
-            physics: NeverScrollableScrollPhysics(),
-            primary: false,
-            padding: const EdgeInsets.only(top: 5, left: 5, right: 5),
-            crossAxisSpacing: 2,
-            mainAxisSpacing: 0,
-            crossAxisCount: 4,
-            children: days.days.entries
-                .map((day) => radioButton(day.key, day.value))
-                .toList(),
-          )
+              shrinkWrap: true,
+              physics: NeverScrollableScrollPhysics(),
+              primary: false,
+              padding: const EdgeInsets.only(top: 5, left: 5, right: 5),
+              crossAxisSpacing: 2,
+              mainAxisSpacing: 0,
+              crossAxisCount: 4,
+              children: openDays.entries
+                  .map((value) => radioButton(value.key, value.value))
+                  .toList())
         ],
       ),
     );
@@ -49,7 +52,31 @@ class _OpenDaySelectState extends State<OpenDaySelect> {
     return GestureDetector(
       onTap: () {
         setState(() {
-          days.days[day] = !status;
+          //days.days[day] = !status;
+          openDays[day] = !status;
+          switch (day) {
+            case 'monday':
+              widget.days.monday = !status;
+              break;
+            case 'tuesday':
+              widget.days.tuesday = !status;
+              break;
+            case 'wednesday':
+              widget.days.wednesday = !status;
+              break;
+            case 'thursday':
+              widget.days.thursday = !status;
+              break;
+            case 'friday':
+              widget.days.friday = !status;
+              break;
+            case 'saturday':
+              widget.days.saturday = !status;
+              break;
+            case 'sunday':
+              widget.days.sunday = !status;
+              break;
+          }
         });
       },
       child: Container(
@@ -71,11 +98,43 @@ class _OpenDaySelectState extends State<OpenDaySelect> {
             ),
             Container(
               margin: EdgeInsets.only(left: 4),
-              child: Text(day),
+              child: Text(
+                tranDayToThai(day),
+                style: TextStyle(fontSize: 12),
+              ),
             )
           ],
         ),
       ),
     );
+  }
+
+  String tranDayToThai(String day) {
+    switch (day) {
+      case 'monday':
+        return 'จันทร์';
+        break;
+      case 'tuesday':
+        return 'อังคาร';
+        break;
+      case 'wednesday':
+        return 'พุธ';
+        break;
+      case 'thursday':
+        return 'พฤหัสบดี';
+        break;
+      case 'friday':
+        return 'ศุกร์';
+        break;
+      case 'saturday':
+        return 'เสาร์';
+        break;
+      case 'sunday':
+        return 'อาทิตย์';
+        break;
+      default:
+        return '';
+        break;
+    }
   }
 }

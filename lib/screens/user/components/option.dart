@@ -1,5 +1,6 @@
 import 'package:charoenkrung_app/config/config.dart';
 import 'package:charoenkrung_app/providers/menuProvider.dart';
+import 'package:charoenkrung_app/providers/shopProvider.dart';
 import 'package:charoenkrung_app/screens/user/components/shop/shopAdd.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -8,10 +9,12 @@ class Options extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var menu = Provider.of<MenuProvider>(context).menu;
-    return _createOptions(context, menu);
+    var provider = Provider.of<ShopProvider>(context, listen: false);
+    return _createOptions(context, menu, provider);
   }
 
-  Widget _createOptions(BuildContext context, String menu) {
+  Widget _createOptions(
+      BuildContext context, String menu, ShopProvider provider) {
     switch (menu) {
       case 'ออร์เดอร์':
         return Container();
@@ -29,8 +32,12 @@ class Options extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 FlatButton(
-                    onPressed: () => Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => ShopAdd())),
+                    onPressed: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => ShopAdd(
+                                  provider: provider,
+                                ))),
                     child: Text(
                       'สร้างร้าน',
                       style:

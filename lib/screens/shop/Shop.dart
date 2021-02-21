@@ -42,7 +42,7 @@ class Shop extends StatelessWidget {
               MenuBar(),
               Options(sid: shop.sid),
               Body(
-                sid: shop.sid,
+                shop: shop,
               )
             ],
           ),

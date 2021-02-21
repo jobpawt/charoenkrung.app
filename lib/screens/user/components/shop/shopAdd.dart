@@ -1,7 +1,10 @@
+import 'dart:convert';
+
 import 'package:charoenkrung_app/config/config.dart';
 import 'package:charoenkrung_app/data/dayData.dart';
 import 'package:charoenkrung_app/data/shopData.dart';
 import 'package:charoenkrung_app/data/userData.dart';
+import 'package:charoenkrung_app/providers/shopProvider.dart';
 import 'package:charoenkrung_app/providers/userProvider.dart';
 import 'package:charoenkrung_app/services/imageService.dart';
 import 'package:charoenkrung_app/services/shopService.dart';
@@ -20,13 +23,17 @@ import 'dart:io';
 import 'package:provider/provider.dart';
 
 class ShopAdd extends StatefulWidget {
+  final ShopProvider provider;
+
+  ShopAdd({this.provider});
+
   @override
   _ShopAddState createState() => _ShopAddState();
 }
 
 class _ShopAddState extends State<ShopAdd> {
   final picker = ImagePicker();
-  final days = new DayData();
+  final open = new DayData();
   final _name = TextEditingController();
   final _address = TextEditingController();
   final _phone = TextEditingController();
@@ -72,7 +79,7 @@ class _ShopAddState extends State<ShopAdd> {
           createEditText(
               controller: _bank, text: 'พร้อมเพย์', type: EditTextType.number),
           OpenDaySelect(
-            days: days,
+            days: open,
           ),
           createButton(
               text: 'สร้าง',
@@ -101,8 +108,9 @@ class _ShopAddState extends State<ShopAdd> {
               phone: phone,
               bank: bank,
               url: url,
-              open: days.days.toString(),
-              uid: user.uid);
+              open: jsonEncode(open.toJson()),
+              uid: user.uid,
+              status: 'NOT ALLOW');
           await ShopService.create(shop: shop, user: user).then((res) {
             DialogBox.close(context);
             if (res != null && res.type == 'error') {
@@ -114,6 +122,7 @@ class _ShopAddState extends State<ShopAdd> {
                     DialogBox.close(context);
                   });
             } else {
+              widget.provider.add(shop);
               DialogBox.oneButton(
                   context: context,
                   message: 'สร้างร้านแล้ว กรุณารอเจ้าหน้าที่ตรวจสอบ',

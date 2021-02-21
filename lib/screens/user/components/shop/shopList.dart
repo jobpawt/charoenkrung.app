@@ -3,7 +3,6 @@ import 'package:charoenkrung_app/data/shopData.dart';
 import 'package:charoenkrung_app/providers/shopProvider.dart';
 import 'package:charoenkrung_app/providers/userProvider.dart';
 import 'package:charoenkrung_app/screens/shop/Shop.dart';
-import 'package:charoenkrung_app/services/shopService.dart';
 import 'package:charoenkrung_app/utils/panel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
