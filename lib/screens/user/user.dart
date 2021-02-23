@@ -1,5 +1,6 @@
 import 'package:charoenkrung_app/config/config.dart';
 import 'package:charoenkrung_app/data/shopData.dart';
+import 'package:charoenkrung_app/providers/productProvider.dart';
 import 'package:charoenkrung_app/providers/shopProvider.dart';
 import 'package:charoenkrung_app/providers/userProvider.dart';
 import 'package:charoenkrung_app/screens/user/components/option.dart';
@@ -31,7 +32,7 @@ class _UserState extends State<User> {
               selected: 0,
               menus: ['ออร์เดอร์', 'จอง', 'ประวัติ', 'ร้านของฉัน']),
         ),
-        ChangeNotifierProvider(create: (_) => ShopProvider(shops: shopList))
+        ChangeNotifierProvider(create: (_) => ShopProvider(shops: shopList)),
       ],
       child: Scaffold(
         backgroundColor: Config.accentColor,

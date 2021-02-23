@@ -1,6 +1,7 @@
 import 'package:charoenkrung_app/config/config.dart';
 import 'package:charoenkrung_app/data/shopData.dart';
 import 'package:charoenkrung_app/data/userData.dart';
+import 'package:charoenkrung_app/providers/productProvider.dart';
 import 'package:charoenkrung_app/providers/shopProvider.dart';
 import 'package:charoenkrung_app/providers/userProvider.dart';
 import 'package:charoenkrung_app/screens/home/components/body.dart';
@@ -20,7 +21,6 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-
   @override
   void initState() {
     super.initState();
@@ -35,6 +35,7 @@ class _HomeState extends State<Home> {
             create: (_) => MenuProvider(
                 menus: ['อาหาร', 'พรีออร์เดอร์', 'โปรโมชั่น', 'ข่าวสาร'],
                 selected: 0)),
+        ChangeNotifierProvider(create: (_) => ProductProvider())
       ],
       child: Scaffold(
         backgroundColor: Config.lightColor,
@@ -71,15 +72,17 @@ class _HomeState extends State<Home> {
             : Row(
                 children: [
                   IconButton(
-                      icon: SvgPicture.asset('assets/Mychat.svg',
-                          color: Config.darkColor,
-                          width: 32,
+                      icon: SvgPicture.asset(
+                        'assets/Mychat.svg',
+                        color: Config.darkColor,
+                        width: 32,
                       ),
                       onPressed: null),
                   IconButton(
-                      icon: SvgPicture.asset('assets/Mymenu.svg',
-                          color: Config.darkColor,
-                          width: 32,
+                      icon: SvgPicture.asset(
+                        'assets/Mymenu.svg',
+                        color: Config.darkColor,
+                        width: 32,
                       ),
                       onPressed: () => Navigator.push(context,
                           MaterialPageRoute(builder: (context) => User())))
@@ -88,5 +91,4 @@ class _HomeState extends State<Home> {
       ],
     );
   }
-
 }

@@ -84,7 +84,7 @@ class _PromotionAddState extends State<PromotionAdd> {
     promotion.price = int.parse(_price.text.trim());
     promotion.pid = widget.productList[selectedIndex].pid;
     promotion.start = start.toLocal().toString().split(' ')[0];
-    promotion.end = start.toLocal().toString().split(' ')[0];
+    promotion.end = end.toLocal().toString().split(' ')[0];
     if (_validate(
         context: context,
         name: promotion.name,

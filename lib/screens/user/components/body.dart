@@ -1,8 +1,11 @@
+import 'package:charoenkrung_app/data/productData.dart';
 import 'package:charoenkrung_app/data/shopData.dart';
 import 'package:charoenkrung_app/providers/menuProvider.dart';
+import 'package:charoenkrung_app/providers/productProvider.dart';
 import 'package:charoenkrung_app/providers/shopProvider.dart';
 import 'package:charoenkrung_app/providers/userProvider.dart';
 import 'package:charoenkrung_app/screens/user/components/shop/shopList.dart';
+import 'package:charoenkrung_app/services/productService.dart';
 import 'package:charoenkrung_app/services/shopService.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -22,10 +25,15 @@ class _BodyState extends State<Body> {
   @override
   Widget build(BuildContext context) {
     var menu = Provider.of<MenuProvider>(context);
-    return Expanded(child: checkBody(menu.menu,));
+    return Expanded(
+        child: checkBody(
+      menu.menu,
+    ));
   }
 
-  Widget checkBody(String menu,) {
+  Widget checkBody(
+    String menu,
+  ) {
     //menus: ['ออร์เดอร์', 'จอง', 'ประวัติ', 'ร้านของฉัน']),
     switch (menu) {
       case 'ออร์เดอร์':
@@ -56,4 +64,5 @@ class _BodyState extends State<Body> {
       }
     });
   }
+
 }

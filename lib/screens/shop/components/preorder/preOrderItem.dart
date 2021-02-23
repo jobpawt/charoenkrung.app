@@ -34,6 +34,13 @@ class PreOrderItem extends StatelessWidget {
                 style: TextStyle(color: Colors.black, fontSize: 16),
               ),
             ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(
+                'ราคา ${preOrder.price} บาท',
+                style: TextStyle(fontSize: 12),
+              ),
+            ),
             buildTimeLeft()
           ],
         ),
@@ -82,7 +89,6 @@ class PreOrderItem extends StatelessWidget {
         provider.remove(preOrder);
       }
     });
-
   }
 
   Widget buildTimeLeft() {

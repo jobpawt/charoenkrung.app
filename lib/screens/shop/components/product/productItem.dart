@@ -37,17 +37,14 @@ class ProductItem extends StatelessWidget {
               padding: const EdgeInsets.all(8.0),
               child: Text(
                 '${product.name}',
-                style: TextStyle(
-                    color: Colors.black,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 14),
+                style: TextStyle(color: Colors.black, fontSize: 16),
               ),
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Text(
-                'สถานะ ${product.status}',
-                style: TextStyle(color: Colors.pink, fontSize: 12),
+                'ราคา ${product.price} บาท',
+                style: TextStyle(color: Config.accentColor, fontSize: 12),
               ),
             )
           ],

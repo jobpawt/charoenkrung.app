@@ -1,4 +1,8 @@
+import 'package:charoenkrung_app/data/productData.dart';
 import 'package:charoenkrung_app/providers/menuProvider.dart';
+import 'package:charoenkrung_app/providers/productProvider.dart';
+import 'package:charoenkrung_app/screens/home/components/product/productList.dart';
+import 'package:charoenkrung_app/services/productService.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -9,55 +13,54 @@ class Body extends StatefulWidget {
 
 class _BodyState extends State<Body> {
   @override
+  void initState() {
+    super.initState();
+    _getAllProduct();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return buildGridView(context);
+    var menu = Provider.of<MenuProvider>(context);
+    return Expanded(child: checkBody(menu.menu));
   }
 
-  Future<List<dynamic>> getDataFromDatabase({String menu}) async {
-    return null;
+  Widget checkBody(
+    String menu,
+  ) {
+    switch (menu) {
+      case 'อาหาร':
+        return ProductList();
+        break;
+      case 'พรีออร์เดอร์':
+        return Container(
+          child: Text('พรีออร์เดอร์'),
+        );
+        break;
+      case 'โปรโมชั่น':
+        return Container(
+          child: Text('โปรโมชั่น'),
+        );
+        break;
+      case 'ข่าวสาร':
+        return Container(
+          child: Text('ข่าวสาร'),
+        );
+        break;
+      default:
+        return Container(
+          child: Text('ไม่มีรายการ'),
+        );
+        break;
+    }
   }
 
-  Widget buildGridView(BuildContext context) {
-    String menu = Provider.of<MenuProvider>(context).menu;
-    double _crossAxisSpacing = 8;
-    double _screenWidth = MediaQuery.of(context).size.width;
-    int _crossAxisCount = 2;
-    double _width =
-        (_screenWidth - ((_crossAxisCount - 1) * _crossAxisSpacing)) /
-            _crossAxisCount;
-    double _cellHeight = 250;
-    double _aspectRatio = _width / _cellHeight;
-    //have data
-    return Expanded(
-        child: FutureBuilder(
-      future: getDataFromDatabase(menu: menu),
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          //waiting downloading data
-          return Center(
-            child: Container(
-              child: CircularProgressIndicator(),
-            ),
-          );
-        } else {
-          //finished
-          var productList = snapshot.data;
-          return productList != null
-              ? GridView.builder(
-                  itemCount: productList.length,
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: _crossAxisCount,
-                      crossAxisSpacing: _crossAxisSpacing,
-                      mainAxisSpacing: _crossAxisSpacing,
-                      childAspectRatio: _aspectRatio),
-                  itemBuilder: (context, index) => null)
-              : Center(
-                  child: Container(
-                    child: Text('ไม่มีข้อมูล'),
-                  ),
-                );
-        }
-      },
-    ));
+  _getAllProduct() async {
+    await ProductService.getAll().then((res) async {
+      if (res.type != 'error') {
+        var productList = res.data as List<ProductData>;
+        Provider.of<ProductProvider>(context, listen: false)
+            .addAll(productList);
+      }
+    });
   }
 }
