@@ -1,65 +1,55 @@
 import 'package:charoenkrung_app/config/config.dart';
-import 'package:charoenkrung_app/data/preOrderData.dart';
+import 'package:charoenkrung_app/data/productData.dart';
+import 'package:charoenkrung_app/data/promotionData.dart';
 import 'package:charoenkrung_app/utils/button.dart';
 import 'package:charoenkrung_app/utils/panel.dart';
 import 'package:flutter/material.dart';
 
-class PreOrderItem extends StatelessWidget {
-  final PreOrderData preOrder;
+class PromotionItem extends StatelessWidget {
+  final ProductData product;
+  final PromotionData promotion;
 
-  PreOrderItem({this.preOrder});
+  PromotionItem({this.product, this.promotion});
 
   @override
   Widget build(BuildContext context) {
     return createItemPanel(
         child: Column(
-      mainAxisAlignment: MainAxisAlignment.start,
       children: [
         Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             showImage(),
             Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    preOrder.name,
-                    style: TextStyle(fontSize: 18, color: Colors.black),
+                child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  margin: EdgeInsets.symmetric(vertical: 8),
+                  child: Text(
+                    '${promotion.name}',
+                    style: TextStyle(color: Colors.black, fontSize: 14),
                   ),
-                  Container(
-                    margin: EdgeInsets.symmetric(vertical: 10),
-                    child: Text(
-                      preOrder.description,
-                      style: TextStyle(fontSize: 12),
-                    ),
-                  ),
-                  Container(
-                    margin: EdgeInsets.symmetric(vertical: 8),
-                    child: Text(
-                      'ราคา ${preOrder.price} บาท',
-                      style: TextStyle(fontSize: 14, color: Config.darkColor),
-                    ),
-                  ),
-                  buildTimeLeft(),
-                ],
-              ),
-            )
+                ),
+                Text(
+                  'ราคา ${promotion.price} บาท',
+                  style: TextStyle(color: Config.primaryColor, fontSize: 14),
+                ),
+                buildTimeLeft()
+              ],
+            ))
           ],
         ),
         Align(
-          alignment: Alignment.centerRight,
-          child: createFlatButton(
-              color: Colors.pink, text: 'จอง', press: () => null),
-        )
+            alignment: Alignment.centerRight,
+            child: createFlatButton(
+                text: 'ซื้อเลย', color: Colors.pink, press: () => null))
       ],
     ));
   }
 
   Widget buildTimeLeft() {
-    DateTime start = DateTime.parse(preOrder.start);
-    DateTime end = DateTime.parse(preOrder.end);
+    DateTime start = DateTime.parse(promotion.start);
+    DateTime end = DateTime.parse(promotion.end);
     int left =
         end.difference(start).inDays - DateTime.now().difference(start).inDays;
 
@@ -68,9 +58,7 @@ class PreOrderItem extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Padding(
-          padding: const EdgeInsets.only(
-            top: 0,
-          ),
+          padding: const EdgeInsets.only(top: 10, bottom: 20),
           child: Text.rich(TextSpan(style: TextStyle(fontSize: 12), children: [
             TextSpan(
                 text: 'สิ้นสุด ${end.toLocal().day}/${end.month}/${end.year}'),
@@ -86,7 +74,7 @@ class PreOrderItem extends StatelessWidget {
 
   Widget showImage() {
     return FutureBuilder(
-        future: _getImageFromNetwork(preOrder.url),
+        future: _getImageFromNetwork(product.url),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
             return snapshot.data;

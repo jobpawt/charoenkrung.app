@@ -3,6 +3,7 @@ import 'package:charoenkrung_app/data/shopData.dart';
 import 'package:charoenkrung_app/data/userData.dart';
 import 'package:charoenkrung_app/providers/preOrderProvider.dart';
 import 'package:charoenkrung_app/providers/productProvider.dart';
+import 'package:charoenkrung_app/providers/promotionProvider.dart';
 import 'package:charoenkrung_app/providers/shopProvider.dart';
 import 'package:charoenkrung_app/providers/userProvider.dart';
 import 'package:charoenkrung_app/screens/home/components/body.dart';
@@ -37,7 +38,8 @@ class _HomeState extends State<Home> {
                 menus: ['อาหาร', 'พรีออร์เดอร์', 'โปรโมชั่น', 'ข่าวสาร'],
                 selected: 0)),
         ChangeNotifierProvider(create: (_) => ProductProvider()),
-        ChangeNotifierProvider(create: (_) => PreOrderProvider())
+        ChangeNotifierProvider(create: (_) => PreOrderProvider()),
+        ChangeNotifierProvider(create: (_) => PromotionProvider())
       ],
       child: Scaffold(
         backgroundColor: Config.lightColor,

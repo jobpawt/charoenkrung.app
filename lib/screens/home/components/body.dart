@@ -1,12 +1,16 @@
 import 'package:charoenkrung_app/data/preOrderData.dart';
 import 'package:charoenkrung_app/data/productData.dart';
+import 'package:charoenkrung_app/data/promotionData.dart';
 import 'package:charoenkrung_app/providers/menuProvider.dart';
 import 'package:charoenkrung_app/providers/preOrderProvider.dart';
 import 'package:charoenkrung_app/providers/productProvider.dart';
+import 'package:charoenkrung_app/providers/promotionProvider.dart';
 import 'package:charoenkrung_app/screens/home/components/preorder/preOrderList.dart';
 import 'package:charoenkrung_app/screens/home/components/product/productList.dart';
+import 'package:charoenkrung_app/screens/home/components/promotion/promotionList.dart';
 import 'package:charoenkrung_app/services/preOrderService.dart';
 import 'package:charoenkrung_app/services/productService.dart';
+import 'package:charoenkrung_app/services/promotionService.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -21,6 +25,7 @@ class _BodyState extends State<Body> {
     super.initState();
     _getAllProduct();
     _getAllPreOrder();
+    _getAllPromotion();
   }
 
   @override
@@ -40,9 +45,7 @@ class _BodyState extends State<Body> {
         return PreOrderList();
         break;
       case 'โปรโมชั่น':
-        return Container(
-          child: Text('โปรโมชั่น'),
-        );
+        return PromotionList();
         break;
       case 'ข่าวสาร':
         return Container(
@@ -73,6 +76,16 @@ class _BodyState extends State<Body> {
         var preOrderList = res.data as List<PreOrderData>;
         Provider.of<PreOrderProvider>(context, listen: false)
             .addAll(preOrderList);
+      }
+    });
+  }
+
+  _getAllPromotion() async {
+    await PromotionService.getAll().then((res) async {
+      if (res.type != 'error') {
+        var promotionList = res.data as List<PromotionData>;
+        Provider.of<PromotionProvider>(context, listen: false)
+            .addAll(promotionList);
       }
     });
   }
