@@ -47,7 +47,8 @@ class ProductItem extends StatelessWidget {
                         children: [
                           Text(
                             'ราคา ${product.price} บาท',
-                            style: TextStyle(color: Config.darkColor, fontSize: 12),
+                            style: TextStyle(
+                                color: Config.darkColor, fontSize: 16),
                           ),
                           createFlatButton(
                               text: 'ซื้อเลย',

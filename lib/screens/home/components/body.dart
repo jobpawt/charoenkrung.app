@@ -1,7 +1,11 @@
+import 'package:charoenkrung_app/data/preOrderData.dart';
 import 'package:charoenkrung_app/data/productData.dart';
 import 'package:charoenkrung_app/providers/menuProvider.dart';
+import 'package:charoenkrung_app/providers/preOrderProvider.dart';
 import 'package:charoenkrung_app/providers/productProvider.dart';
+import 'package:charoenkrung_app/screens/home/components/preorder/preOrderList.dart';
 import 'package:charoenkrung_app/screens/home/components/product/productList.dart';
+import 'package:charoenkrung_app/services/preOrderService.dart';
 import 'package:charoenkrung_app/services/productService.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -16,6 +20,7 @@ class _BodyState extends State<Body> {
   void initState() {
     super.initState();
     _getAllProduct();
+    _getAllPreOrder();
   }
 
   @override
@@ -32,9 +37,7 @@ class _BodyState extends State<Body> {
         return ProductList();
         break;
       case 'พรีออร์เดอร์':
-        return Container(
-          child: Text('พรีออร์เดอร์'),
-        );
+        return PreOrderList();
         break;
       case 'โปรโมชั่น':
         return Container(
@@ -60,6 +63,16 @@ class _BodyState extends State<Body> {
         var productList = res.data as List<ProductData>;
         Provider.of<ProductProvider>(context, listen: false)
             .addAll(productList);
+      }
+    });
+  }
+
+  _getAllPreOrder() async {
+    await PreOrderService.getAll().then((res) async {
+      if (res.type != 'error') {
+        var preOrderList = res.data as List<PreOrderData>;
+        Provider.of<PreOrderProvider>(context, listen: false)
+            .addAll(preOrderList);
       }
     });
   }
