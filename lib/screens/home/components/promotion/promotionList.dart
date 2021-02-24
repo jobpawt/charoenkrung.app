@@ -14,7 +14,14 @@ class _PromotionListState extends State<PromotionList> {
   @override
   Widget build(BuildContext context) {
     var productList = Provider.of<ProductProvider>(context).products;
-    var promotionList = Provider.of<PromotionProvider>(context).promotions;
+    var promotionList =
+        Provider.of<PromotionProvider>(context).promotions.where((element) {
+      DateTime start = DateTime.parse(element.start);
+      DateTime end = DateTime.parse(element.end);
+      int left = end.difference(start).inDays -
+          DateTime.now().difference(start).inDays;
+      return left > 0;
+    }).toList();
 
     return promotionList.length != 0
         ? ListView.builder(
@@ -27,5 +34,4 @@ class _PromotionListState extends State<PromotionList> {
           )
         : Container(child: Text('ไม่มีรายการ'));
   }
-
 }

@@ -1,8 +1,11 @@
 import 'package:charoenkrung_app/config/config.dart';
 import 'package:charoenkrung_app/data/productData.dart';
+import 'package:charoenkrung_app/providers/userProvider.dart';
+import 'package:charoenkrung_app/screens/home/components/buy/buy.dart';
 import 'package:charoenkrung_app/utils/button.dart';
 import 'package:charoenkrung_app/utils/panel.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class ProductItem extends StatelessWidget {
   final ProductData product;
@@ -11,6 +14,7 @@ class ProductItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var user = Provider.of<UserProvider>(context, listen: false);
     return createItemPanel(
       child: Column(
         children: [
@@ -53,7 +57,17 @@ class ProductItem extends StatelessWidget {
                           createFlatButton(
                               text: 'ซื้อเลย',
                               color: Colors.pink,
-                              press: () => null)
+                              press: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => Buy(
+                                      product: product,
+                                      promotion: null,
+                                    ),
+                                  ),
+                                );
+                              })
                         ],
                       )
                     ],

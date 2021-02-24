@@ -1,6 +1,7 @@
 import 'package:charoenkrung_app/config/config.dart';
 import 'package:charoenkrung_app/data/productData.dart';
 import 'package:charoenkrung_app/data/promotionData.dart';
+import 'package:charoenkrung_app/screens/home/components/buy/buy.dart';
 import 'package:charoenkrung_app/utils/button.dart';
 import 'package:charoenkrung_app/utils/panel.dart';
 import 'package:flutter/material.dart';
@@ -15,34 +16,47 @@ class PromotionItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return createItemPanel(
         child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Row(
           children: [
             showImage(),
             Expanded(
-                child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Container(
-                  margin: EdgeInsets.symmetric(vertical: 8),
-                  child: Text(
-                    '${promotion.name}',
-                    style: TextStyle(color: Colors.black, fontSize: 14),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    margin: EdgeInsets.symmetric(vertical: 8),
+                    child: Text(
+                      '${promotion.name}',
+                      style: TextStyle(color: Colors.black, fontSize: 14),
+                    ),
                   ),
-                ),
-                Text(
-                  'ราคา ${promotion.price} บาท',
-                  style: TextStyle(color: Config.primaryColor, fontSize: 14),
-                ),
-                buildTimeLeft()
-              ],
-            ))
+                  Text(
+                    'ราคา ${promotion.price} บาท',
+                    style: TextStyle(color: Config.primaryColor, fontSize: 14),
+                  ),
+                  buildTimeLeft()
+                ],
+              ),
+            )
           ],
         ),
         Align(
-            alignment: Alignment.centerRight,
-            child: createFlatButton(
-                text: 'ซื้อเลย', color: Colors.pink, press: () => null))
+          alignment: Alignment.centerRight,
+          child: createFlatButton(
+              text: 'ซื้อเลย',
+              color: Colors.pink,
+              press: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => Buy(
+                              product: product,
+                              promotion: promotion,
+                            )));
+              }),
+        )
       ],
     ));
   }
