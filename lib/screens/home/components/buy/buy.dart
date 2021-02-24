@@ -80,6 +80,9 @@ class _BuyState extends State<Buy> {
   @override
   Widget build(BuildContext context) {
     var user = Provider.of<UserProvider>(context);
+    setState(() {
+      _phone.text = user.user.phone;
+    });
     return Scaffold(
       backgroundColor: Config.lightColor,
       appBar: createAppBar(
@@ -183,7 +186,9 @@ class _BuyState extends State<Buy> {
               ? Container(
                   margin: EdgeInsets.all(Config.kMargin),
                   child: createOutlineButton(
-                      text: 'อัปโหลดหลักฐานการโอนเงิน',
+                      text: imageFile == null
+                          ? 'อัปโหลดหลักฐานการโอนเงิน'
+                          : 'อัปโหลดแล้ว',
                       color: Config.darkColor,
                       press: () async {
                         pickImage(picker).then((value) {
@@ -236,7 +241,7 @@ class _BuyState extends State<Buy> {
     var send = new SendTypeData(
       type: typeOfSend,
       address: _address.text.trim(),
-      position: position,
+      position: typeOfSend == 'delivery' ? position : null,
       recive_date: typeOfSend == 'myself' ? dateTime : null,
       phone: _phone.text.trim(),
     );

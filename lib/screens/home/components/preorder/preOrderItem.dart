@@ -1,5 +1,6 @@
 import 'package:charoenkrung_app/config/config.dart';
 import 'package:charoenkrung_app/data/preOrderData.dart';
+import 'package:charoenkrung_app/screens/home/components/book/book.dart';
 import 'package:charoenkrung_app/utils/button.dart';
 import 'package:charoenkrung_app/utils/panel.dart';
 import 'package:flutter/material.dart';
@@ -51,7 +52,18 @@ class PreOrderItem extends StatelessWidget {
         Align(
           alignment: Alignment.centerRight,
           child: createFlatButton(
-              color: Colors.pink, text: 'จอง', press: () => null),
+              color: Colors.pink,
+              text: 'จอง',
+              press: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => Book(
+                      preOrder: preOrder,
+                    ),
+                  ),
+                );
+              }),
         )
       ],
     ));

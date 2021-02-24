@@ -1,3 +1,4 @@
+import 'package:charoenkrung_app/config/config.dart';
 import 'package:charoenkrung_app/screens/home/home.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -19,7 +20,10 @@ class MyApp extends StatelessWidget {
             title: 'Charoenkrung App',
             theme: ThemeData(
               fontFamily: 'Prompt',
-              visualDensity: VisualDensity.adaptivePlatformDensity
+              visualDensity: VisualDensity.adaptivePlatformDensity,
+              accentColor: Config.accentColor,
+              primaryColor: Config.primaryColor,
+              primaryColorDark: Config.darkColor
             ),
             home: Home()));
   }

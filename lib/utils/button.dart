@@ -52,7 +52,10 @@ Widget createOutlineButton({Function press, Color color, String text}) {
       height: 50,
       child: OutlineButton(
         onPressed: press,
-        child: Text(text, style: TextStyle(color: color, fontSize: 18)),
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Text(text, style: TextStyle(color: color, fontSize: 14)),
+        ),
       ),
     ),
   );
