@@ -7,8 +7,11 @@ import 'package:charoenkrung_app/data/productData.dart';
 import 'package:charoenkrung_app/data/promotionData.dart';
 import 'package:charoenkrung_app/data/realtimeData.dart';
 import 'package:charoenkrung_app/data/sendType.dart';
+import 'package:charoenkrung_app/data/userData.dart';
 import 'package:charoenkrung_app/providers/orderProvider.dart';
 import 'package:charoenkrung_app/providers/promotionProvider.dart';
+import 'package:charoenkrung_app/providers/userProvider.dart';
+import 'package:charoenkrung_app/services/buyService.dart';
 import 'package:charoenkrung_app/utils/button.dart';
 import 'package:charoenkrung_app/utils/dialogBox.dart';
 import 'package:charoenkrung_app/utils/panel.dart';
@@ -37,6 +40,7 @@ class OrderItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     PromotionData promotion;
+    var user = Provider.of<UserProvider>(context);
     if (orders.pro_id != null) {
       promotion = Provider.of<PromotionProvider>(context)
           .promotions
@@ -119,35 +123,43 @@ class OrderItem extends StatelessWidget {
         SizedBox(
           height: Config.kMargin,
         ),
-        buildButton(orders.status)
+        buildButton(orders.status, user.user)
       ],
     ));
   }
 
-  Widget buildButton(String status) {
+  Widget buildButton(String status, UserData user) {
     switch (status) {
       case 'waiting':
         return Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
           createButton(
             text: 'ปฏิเสธ',
             color: Colors.red,
-            press: () {
+            press: () async {
               orders.status = 'reject';
               //send data to another
-              channel.sink.add(jsonEncode(
-                  RealtimeData(type: 'edit_buy', data: orders.toJson())));
-              provider.edit(orders);
+              await BuyService.edit(data: orders, token: user.token).then((value) {
+                if(value == null){
+                  channel.sink.add(jsonEncode(
+                      RealtimeData(type: 'edit_buy', data: orders.toJson())));
+                  provider.edit(orders);
+                }
+              });
             },
           ),
           createButton(
             text: 'ยืนยัน',
             color: Config.primaryColor,
-            press: () {
+            press: () async {
               orders.status = 'confirm';
               //send data to another
-              channel.sink.add(jsonEncode(
-                  RealtimeData(type: 'edit_buy', data: orders.toJson())));
-              provider.edit(orders);
+              await BuyService.edit(data: orders, token: user.token).then((value) {
+                if(value == null){
+                  channel.sink.add(jsonEncode(
+                      RealtimeData(type: 'edit_buy', data: orders.toJson())));
+                  provider.edit(orders);
+                }
+              });
             },
           ),
         ]);

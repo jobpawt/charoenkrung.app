@@ -23,6 +23,22 @@ class BuyService {
     }
   }
 
+  static Future<ServerResponse> edit({BuyData data, String token}) async {
+    data.date = data.date.split('T')[0];
+    var response =
+        await Http.patch('${Config.DATABASE}/buy/edit/${data.buy_id}',
+            headers: <String, String>{
+              'Content-Type': 'application/json; charset=UTF-8',
+              'Authorization': 'Bearer $token'
+            },
+            body: jsonEncode(data.toJson()));
+    if (response.statusCode == 200) {
+      return null;
+    } else {
+      return ServerResponse.fromJson(json.decode(response.body));
+    }
+  }
+
   static Future<ServerResponse> getAll({String token}) async {
     var response = await Http.get(
       '${Config.DATABASE}/buy/all',
