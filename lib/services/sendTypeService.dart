@@ -23,4 +23,20 @@ class SendTypeService {
       return ServerResponse.fromJson(json.decode(response.body));
     }
   }
+
+  static Future<ServerResponse> get({String id, String token}) async {
+    var response = await Http.get(
+      '${Config.DATABASE}/send/type/$id',
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Authorization': 'Bearer $token'
+      },
+    );
+    if (response.statusCode == 206) {
+      var data = SendTypeData.fromJson(json.decode(response.body));
+      return ServerResponse(data: data);
+    } else {
+      return ServerResponse.fromJson(json.decode(response.body));
+    }
+  }
 }

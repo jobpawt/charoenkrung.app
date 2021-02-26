@@ -3,7 +3,6 @@ import 'package:charoenkrung_app/config/config.dart';
 
 Widget createButton({String text, Color color, Function press}) {
   return Container(
-    margin: EdgeInsets.symmetric(horizontal: Config.kMargin),
     child: SizedBox(
       height: 50,
       child: RaisedButton(
@@ -23,7 +22,8 @@ Widget createFlatButton({String text, Color color, Function press}) {
       child: Text(
         text,
         style: TextStyle(color: color, fontSize: 18),
-      ));
+      ),
+  );
 }
 
 Widget createFlatButtonWithIcon(

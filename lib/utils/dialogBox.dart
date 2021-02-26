@@ -1,4 +1,5 @@
 import 'package:charoenkrung_app/config/config.dart';
+import 'package:charoenkrung_app/utils/imageBox.dart';
 import 'package:flutter/material.dart';
 
 class DialogBox {
@@ -42,5 +43,28 @@ class DialogBox {
 
   static close(BuildContext context) {
     Navigator.pop(context);
+  }
+
+  static imageDialog({BuildContext context, String url}) {
+    var alert = AlertDialog(
+      content: Container(
+        width: MediaQuery.of(context).size.width,
+        height: MediaQuery.of(context).size.height,
+        child: Image.network('${Config.IMAGE}/$url'),
+      ),
+      actions: [
+        FlatButton(
+            onPressed: () => DialogBox.close(context),
+            child: Text(
+              'ตกลง',
+              style: TextStyle(color: Config.primaryColor),
+            ))
+      ],
+    );
+
+    showDialog(
+      context: context,
+      builder: (context) => alert,
+    );
   }
 }

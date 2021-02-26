@@ -12,6 +12,7 @@ class BuyData {
   int amount;
   int sum;
   String date;
+  String status;
 
   BuyData({
     // ignore: non_constant_identifier_names
@@ -27,6 +28,7 @@ class BuyData {
     this.amount,
     this.sum,
     this.date,
+    this.status
   });
 
   BuyData.fromJson(Map<String, dynamic> json) {
@@ -39,6 +41,7 @@ class BuyData {
     this.pro_id = json['pro_id'];
     this.sum = json['sum'];
     this.date = json['date'];
+    this.status = json['status'];
   }
 
   Map<String, dynamic> toJson() {
@@ -52,6 +55,7 @@ class BuyData {
     data['sum'] = this.sum;
     data['date'] = this.date;
     data['pro_id'] = this.pro_id;
+    data['status'] = this.status;
     return data;
   }
 }

@@ -1,5 +1,6 @@
 import 'package:charoenkrung_app/config/config.dart';
 import 'package:charoenkrung_app/data/shopData.dart';
+import 'package:charoenkrung_app/providers/OrderProvider.dart';
 import 'package:charoenkrung_app/providers/menuProvider.dart';
 import 'package:charoenkrung_app/providers/preOrderProvider.dart';
 import 'package:charoenkrung_app/providers/productProvider.dart';
@@ -31,7 +32,8 @@ class Shop extends StatelessWidget {
           ),
           ChangeNotifierProvider(create: (_) => ProductProvider()),
           ChangeNotifierProvider(create: (_) => PreOrderProvider()),
-          ChangeNotifierProvider(create: (_) => PromotionProvider())
+          ChangeNotifierProvider(create: (_) => PromotionProvider()),
+          ChangeNotifierProvider(create: (_) => OrderProvider())
         ],
         child: Scaffold(
           backgroundColor: Colors.white,

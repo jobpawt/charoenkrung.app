@@ -30,11 +30,14 @@ class PromotionItem extends StatelessWidget {
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text(
-                'โปรโมชั่น ${promotion.name}',
-                style: TextStyle(color: Colors.black, fontSize: 16),
+            SizedBox(
+              width: 200,
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(
+                  'โปรโมชั่น ${promotion.name}',
+                  style: TextStyle(color: Colors.black, fontSize: 16),
+                ),
               ),
             ),
             _buildTimeLeft(),
@@ -102,7 +105,7 @@ class PromotionItem extends StatelessWidget {
           child: Text.rich(TextSpan(style: TextStyle(fontSize: 12), children: [
             TextSpan(
                 text:
-                    'เริ่มวันที่ ${start.toLocal().day}/${start.month}/${start.year} - '),
+                    'เริ่มวันที่ ${start.toLocal().day}/${start.month}/${start.year} \n\n'),
             TextSpan(
                 text:
                     'สิ้นสุด ${end.toLocal().day}/${end.month}/${end.year}\n'),

@@ -23,55 +23,52 @@ class ProductItem extends StatelessWidget {
             children: [
               showImage(),
               Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.only(right: Config.kPadding),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Container(
-                        margin: EdgeInsets.only(bottom: Config.kPadding),
-                        child: Text(
-                          product.name,
-                          style: TextStyle(fontSize: 16, color: Colors.black),
-                        ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      margin: EdgeInsets.only(bottom: Config.kPadding),
+                      child: Text(
+                        product.name,
+                        style: TextStyle(fontSize: 16, color: Colors.black),
                       ),
-                      Container(
-                        margin: EdgeInsets.only(bottom: Config.kPadding),
-                        child: Text(
-                          product.description,
-                          style: TextStyle(fontSize: 12, color: Colors.grey),
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                        ),
+                    ),
+                    Container(
+                      margin: EdgeInsets.only(bottom: Config.kPadding),
+                      child: Text(
+                        product.description,
+                        style: TextStyle(fontSize: 12, color: Colors.grey),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
                       ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.baseline,
-                        children: [
-                          Text(
-                            'ราคา ${product.price} บาท',
-                            style: TextStyle(
-                                color: Config.darkColor, fontSize: 16),
-                          ),
-                          createFlatButton(
-                              text: 'ซื้อเลย',
-                              color: Colors.pink,
-                              press: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => Buy(
-                                      product: product,
-                                      promotion: null,
-                                    ),
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      crossAxisAlignment: CrossAxisAlignment.baseline,
+                      children: [
+                        Text(
+                          '${product.price} บาท',
+                          style: TextStyle(
+                              color: Config.darkColor, fontSize: 16),
+                        ),
+                        createFlatButton(
+                            text: 'ซื้อ',
+                            color: Colors.pink,
+                            press: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => Buy(
+                                    product: product,
+                                    promotion: null,
                                   ),
-                                );
-                              })
-                        ],
-                      )
-                    ],
-                  ),
+                                ),
+                              );
+                            })
+                      ],
+                    )
+                  ],
                 ),
               )
             ],

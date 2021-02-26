@@ -22,4 +22,20 @@ class PaymentService {
       return ServerResponse.fromJson(json.decode(response.body));
     }
   }
+
+  static Future<ServerResponse> get({String payment_id, String token}) async {
+    var response = await Http.get(
+      '${Config.DATABASE}/payment/$payment_id',
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Authorization': 'Bearer $token'
+      },
+    );
+    if (response.statusCode == 206) {
+      var data = PaymentData.fromJson(json.decode(response.body));
+      return ServerResponse(data: data);
+    } else {
+      return ServerResponse.fromJson(json.decode(response.body));
+    }
+  }
 }

@@ -101,14 +101,19 @@ class PreOrderItem extends StatelessWidget {
       children: [
         Padding(
           padding: const EdgeInsets.all(8.0),
-          child: Text.rich(TextSpan(style: TextStyle(fontSize: 12), children: [
+          child: Text.rich(
             TextSpan(
-                text:
-                    'เริ่มวันที่ ${start.toLocal().day}/${start.month}/${start.year} - '),
-            TextSpan(
-                text:
-                    'สิ้นสุด ${end.toLocal().day}/${end.month}/${end.year}\n'),
-          ])),
+              style: TextStyle(fontSize: 12),
+              children: [
+                TextSpan(
+                    text:
+                        'เริ่มวันที่ ${start.toLocal().day}/${start.month}/${start.year} \n\n'),
+                TextSpan(
+                    text:
+                        'สิ้นสุด ${end.toLocal().day}/${end.month}/${end.year}\n'),
+              ],
+            ),
+          ),
         ),
         Center(
           child: Text(
