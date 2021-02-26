@@ -127,7 +127,7 @@ class _BuyState extends State<Buy> {
                 Expanded(
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: Text('รวมราคา ${widget.product.price * amount} บาท'),
+                    child: Text('รวมราคา ${widget.promotion.price * amount} บาท'),
                   ),
                 )
               ],
@@ -210,15 +210,18 @@ class _BuyState extends State<Buy> {
                   type: EditTextType.text,
                   text: 'รายละเอียดที่อยู่')
               : Container(),
-          createButton(
-              text: 'ยืนยัน',
-              color: Config.primaryColor,
-              press: () {
-                user.user != null
-                    ? _buy(context: context, user: user.user)
-                    : Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => Login()));
-              }),
+          Container(
+            margin: EdgeInsets.all(Config.kMargin),
+            child: createButton(
+                text: 'ยืนยัน',
+                color: Config.primaryColor,
+                press: () {
+                  user.user != null
+                      ? _buy(context: context, user: user.user)
+                      : Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => Login()));
+                }),
+          ),
           SizedBox(
             height: Config.kMargin,
           )
@@ -269,7 +272,7 @@ class _BuyState extends State<Buy> {
         payment_id: paymentResponse.data['id'],
         send_type_id: sendResponse.data['id'],
         amount: amount,
-        sum: (widget.product.price * amount),
+        sum: (widget.promotion.price * amount),
         pid: widget.product.pid,
         pro_id: widget.promotion != null ? widget.promotion.pro_id : null,
         uid: user.uid,

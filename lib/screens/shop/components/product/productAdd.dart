@@ -152,15 +152,21 @@ class _ProductAddState extends State<ProductAdd> {
   Widget buildButton(
       BuildContext context, String token, ProductProvider provider) {
     if (widget.product == null) {
-      return createButton(
-          text: 'สร้าง',
-          color: Config.primaryColor,
-          press: () => _create(context, token, provider));
+      return Container(
+        margin: EdgeInsets.all(Config.kMargin),
+        child: createButton(
+            text: 'สร้าง',
+            color: Config.primaryColor,
+            press: () => _create(context, token, provider)),
+      );
     } else {
-      return createButton(
-          text: 'แก้ไข',
-          color: Config.primaryColor,
-          press: () => _edit(context, token, provider));
+      return Container(
+        margin: EdgeInsets.all(Config.kMargin),
+        child: createButton(
+            text: 'แก้ไข',
+            color: Config.primaryColor,
+            press: () => _edit(context, token, provider)),
+      );
     }
   }
 

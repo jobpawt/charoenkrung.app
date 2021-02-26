@@ -275,18 +275,24 @@ class _PreOrderAddState extends State<PreOrderAdd> {
       {BuildContext context, String token, PreOrderProvider provider}) {
     if (widget.preOrder == null) {
       //create
-      return createButton(
-          text: 'สร้าง',
-          color: Config.primaryColor,
-          press: () =>
-              _create(context: context, token: token, provider: provider));
+      return Container(
+        margin: EdgeInsets.all(Config.kMargin),
+        child: createButton(
+            text: 'สร้าง',
+            color: Config.primaryColor,
+            press: () =>
+                _create(context: context, token: token, provider: provider)),
+      );
     } else {
       //edit
-      return createButton(
-          text: 'แก้ไข',
-          color: Config.primaryColor,
-          press: () =>
-              _edit(context: context, provider: provider, token: token));
+      return Container(
+        margin: EdgeInsets.all(Config.kMargin),
+        child: createButton(
+            text: 'แก้ไข',
+            color: Config.primaryColor,
+            press: () =>
+                _edit(context: context, provider: provider, token: token)),
+      );
     }
   }
 

@@ -4,7 +4,7 @@ import 'package:charoenkrung_app/data/buyData.dart';
 import 'package:charoenkrung_app/data/paymentData.dart';
 import 'package:charoenkrung_app/data/productData.dart';
 import 'package:charoenkrung_app/data/realtimeData.dart';
-import 'package:charoenkrung_app/providers/OrderProvider.dart';
+import 'package:charoenkrung_app/providers/orderProvider.dart';
 import 'package:charoenkrung_app/providers/productProvider.dart';
 import 'package:charoenkrung_app/providers/userProvider.dart';
 import 'package:charoenkrung_app/screens/shop/components/order/orderItem.dart';
@@ -30,8 +30,8 @@ class _OrderListState extends State<OrderList> {
   final WebSocketChannel channel;
 
   _OrderListState({this.channel}) {
-    channel.stream.listen((event) {
-      var data = RealtimeData.fromJson(json.decode(event));
+    channel.stream.listen((res) {
+      RealtimeData data = RealtimeData.fromJson(jsonDecode(res));
       if(data.type == 'new_buy'){
         var buyData = BuyData.fromJson(data.data);
         Provider.of<OrderProvider>(context, listen: false).add(buyData);

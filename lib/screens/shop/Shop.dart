@@ -1,6 +1,6 @@
 import 'package:charoenkrung_app/config/config.dart';
 import 'package:charoenkrung_app/data/shopData.dart';
-import 'package:charoenkrung_app/providers/OrderProvider.dart';
+import 'package:charoenkrung_app/providers/orderProvider.dart';
 import 'package:charoenkrung_app/providers/menuProvider.dart';
 import 'package:charoenkrung_app/providers/preOrderProvider.dart';
 import 'package:charoenkrung_app/providers/productProvider.dart';

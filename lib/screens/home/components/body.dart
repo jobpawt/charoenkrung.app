@@ -2,12 +2,15 @@ import 'package:charoenkrung_app/data/preOrderData.dart';
 import 'package:charoenkrung_app/data/productData.dart';
 import 'package:charoenkrung_app/data/promotionData.dart';
 import 'package:charoenkrung_app/providers/menuProvider.dart';
+import 'package:charoenkrung_app/providers/orderProvider.dart';
 import 'package:charoenkrung_app/providers/preOrderProvider.dart';
 import 'package:charoenkrung_app/providers/productProvider.dart';
 import 'package:charoenkrung_app/providers/promotionProvider.dart';
+import 'package:charoenkrung_app/providers/userProvider.dart';
 import 'package:charoenkrung_app/screens/home/components/preorder/preOrderList.dart';
 import 'package:charoenkrung_app/screens/home/components/product/productList.dart';
 import 'package:charoenkrung_app/screens/home/components/promotion/promotionList.dart';
+import 'package:charoenkrung_app/services/buyService.dart';
 import 'package:charoenkrung_app/services/preOrderService.dart';
 import 'package:charoenkrung_app/services/productService.dart';
 import 'package:charoenkrung_app/services/promotionService.dart';
@@ -23,9 +26,9 @@ class _BodyState extends State<Body> {
   @override
   void initState() {
     super.initState();
-    _getAllProduct();
     _getAllPreOrder();
     _getAllPromotion();
+    _getAllProduct();
   }
 
   @override
@@ -60,16 +63,6 @@ class _BodyState extends State<Body> {
     }
   }
 
-  _getAllProduct() async {
-    await ProductService.getAll().then((res) async {
-      if (res.type != 'error') {
-        var productList = res.data as List<ProductData>;
-        Provider.of<ProductProvider>(context, listen: false)
-            .addAll(productList);
-      }
-    });
-  }
-
   _getAllPreOrder() async {
     await PreOrderService.getAll().then((res) async {
       if (res.type != 'error') {
@@ -86,6 +79,16 @@ class _BodyState extends State<Body> {
         var promotionList = res.data as List<PromotionData>;
         Provider.of<PromotionProvider>(context, listen: false)
             .addAll(promotionList);
+      }
+    });
+  }
+
+  _getAllProduct() async {
+    await ProductService.getAll().then((res) async {
+      if (res.type != 'error') {
+        var productList = res.data as List<ProductData>;
+        Provider.of<ProductProvider>(context, listen: false)
+            .addAll(productList);
       }
     });
   }

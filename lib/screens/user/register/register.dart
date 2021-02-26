@@ -41,10 +41,13 @@ class Register extends StatelessWidget {
               SizedBox(
                 height: Config.kSpace,
               ),
-              createButton(
-                  text: 'สร้าง',
-                  color: Config.primaryColor,
-                  press: () => register(context))
+              Container(
+                margin: EdgeInsets.symmetric(horizontal: Config.kMargin),
+                child: createButton(
+                    text: 'สร้าง',
+                    color: Config.primaryColor,
+                    press: () => register(context)),
+              )
             ],
           ),
         ));

@@ -44,7 +44,7 @@ class ProductItem extends StatelessWidget {
               padding: const EdgeInsets.all(8.0),
               child: Text(
                 'ราคา ${product.price} บาท',
-                style: TextStyle(color: Config.accentColor, fontSize: 12),
+                style: TextStyle(fontSize: 14),
               ),
             )
           ],

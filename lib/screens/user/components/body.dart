@@ -1,10 +1,13 @@
-import 'package:charoenkrung_app/data/productData.dart';
 import 'package:charoenkrung_app/data/shopData.dart';
+import 'package:charoenkrung_app/data/userData.dart';
 import 'package:charoenkrung_app/providers/menuProvider.dart';
+import 'package:charoenkrung_app/providers/orderProvider.dart';
 import 'package:charoenkrung_app/providers/productProvider.dart';
 import 'package:charoenkrung_app/providers/shopProvider.dart';
 import 'package:charoenkrung_app/providers/userProvider.dart';
+import 'package:charoenkrung_app/screens/user/components/order/orderList.dart';
 import 'package:charoenkrung_app/screens/user/components/shop/shopList.dart';
+import 'package:charoenkrung_app/services/buyService.dart';
 import 'package:charoenkrung_app/services/productService.dart';
 import 'package:charoenkrung_app/services/shopService.dart';
 import 'package:flutter/material.dart';
@@ -20,24 +23,21 @@ class _BodyState extends State<Body> {
   void initState() {
     super.initState();
     _getAllShop();
+    _getAllOrder();
+    _getAllProduct();
   }
 
   @override
   Widget build(BuildContext context) {
     var menu = Provider.of<MenuProvider>(context);
-    return Expanded(
-        child: checkBody(
-      menu.menu,
-    ));
+    var user = Provider.of<UserProvider>(context);
+    return Expanded(child: checkBody(menu.menu, user.user));
   }
 
-  Widget checkBody(
-    String menu,
-  ) {
-    //menus: ['ออร์เดอร์', 'จอง', 'ประวัติ', 'ร้านของฉัน']),
+  Widget checkBody(String menu, UserData user) {
     switch (menu) {
       case 'ออร์เดอร์':
-        return Container();
+        return OrderList(user: user);
         break;
       case 'จอง':
         return Container();
@@ -54,6 +54,17 @@ class _BodyState extends State<Body> {
     }
   }
 
+  _getAllProduct() async {
+    await ProductService.getAll().then(
+      (products) {
+        if (products.type != 'error') {
+          Provider.of<ProductProvider>(context, listen: false)
+              .addAll(products.data);
+        }
+      },
+    );
+  }
+
   _getAllShop() async {
     await ShopService.getAll().then((res) async {
       if (res.type != 'error') {
@@ -65,4 +76,12 @@ class _BodyState extends State<Body> {
     });
   }
 
+  _getAllOrder() async {
+    var token = Provider.of<UserProvider>(context, listen: false).user.token;
+    await BuyService.getAll(token: token).then((value) {
+      if (value.type != 'error') {
+        Provider.of<OrderProvider>(context, listen: false).addAll(value.data);
+      }
+    });
+  }
 }

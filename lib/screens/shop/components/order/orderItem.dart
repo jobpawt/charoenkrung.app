@@ -4,15 +4,18 @@ import 'package:charoenkrung_app/config/config.dart';
 import 'package:charoenkrung_app/data/buyData.dart';
 import 'package:charoenkrung_app/data/paymentData.dart';
 import 'package:charoenkrung_app/data/productData.dart';
+import 'package:charoenkrung_app/data/promotionData.dart';
 import 'package:charoenkrung_app/data/realtimeData.dart';
 import 'package:charoenkrung_app/data/sendType.dart';
-import 'package:charoenkrung_app/providers/OrderProvider.dart';
+import 'package:charoenkrung_app/providers/orderProvider.dart';
+import 'package:charoenkrung_app/providers/promotionProvider.dart';
 import 'package:charoenkrung_app/utils/button.dart';
 import 'package:charoenkrung_app/utils/dialogBox.dart';
 import 'package:charoenkrung_app/utils/panel.dart';
 import 'package:charoenkrung_app/utils/response.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
 class OrderItem extends StatelessWidget {
@@ -33,6 +36,12 @@ class OrderItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    PromotionData promotion;
+    if (orders.pro_id != null) {
+      promotion = Provider.of<PromotionProvider>(context)
+          .promotions
+          .firstWhere((element) => element.pro_id == orders.pro_id);
+    }
     return createItemPanel(
         child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -48,6 +57,25 @@ class OrderItem extends StatelessWidget {
             style: TextStyle(fontSize: 16),
           ),
         ),
+        promotion != null
+            ? Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'โปรโมชั่น',
+                    style: TextStyle(color: Colors.grey),
+                  ),
+                  Container(
+                    margin: EdgeInsets.only(bottom: Config.kMargin),
+                    width: double.infinity,
+                    child:  Card(child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(promotion.name, ),
+                    ),),
+                  ),
+                ],
+              )
+            : Container(),
         FutureBuilder(
             future: sendType,
             builder: (context, snapshot) {

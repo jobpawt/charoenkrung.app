@@ -33,10 +33,13 @@ class Login extends StatelessWidget {
               SizedBox(
                 height: Config.kSpace,
               ),
-              createButton(
-                  text: 'เข้าสู่ระบบ',
-                  color: Config.primaryColor,
-                  press: () => login(context)),
+              Container(
+                margin: EdgeInsets.symmetric(horizontal: Config.kMargin),
+                child: createButton(
+                    text: 'เข้าสู่ระบบ',
+                    color: Config.primaryColor,
+                    press: () => login(context)),
+              ),
               SizedBox(
                 height: Config.kSpace,
               ),
