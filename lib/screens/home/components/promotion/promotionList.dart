@@ -1,5 +1,6 @@
 import 'package:charoenkrung_app/providers/productProvider.dart';
 import 'package:charoenkrung_app/providers/promotionProvider.dart';
+import 'package:charoenkrung_app/providers/shopProvider.dart';
 import 'package:charoenkrung_app/screens/home/components/product/productList.dart';
 import 'package:charoenkrung_app/screens/home/components/promotion/promotionItem.dart';
 import 'package:flutter/material.dart';
@@ -14,13 +15,20 @@ class _PromotionListState extends State<PromotionList> {
   @override
   Widget build(BuildContext context) {
     var productList = Provider.of<ProductProvider>(context).products;
+    var shopList = Provider.of<ShopProvider>(context).shops;
     var promotionList =
         Provider.of<PromotionProvider>(context).promotions.where((element) {
       DateTime start = DateTime.parse(element.start);
       DateTime end = DateTime.parse(element.end);
       int left = end.difference(start).inDays -
           DateTime.now().difference(start).inDays;
-      return left > 0;
+      var index =
+          productList.indexWhere((product) => product.pid == element.pid);
+      var shop =
+          shopList.firstWhere((shop) => productList[index].sid == shop.sid);
+      return left > 0 &&
+          shop.status == 'ACTIVE' &&
+          productList[index].status == 'ACTIVE';
     }).toList();
 
     return promotionList.length != 0
