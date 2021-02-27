@@ -1,6 +1,8 @@
 import 'package:charoenkrung_app/config/config.dart';
 import 'package:charoenkrung_app/data/shopData.dart';
+import 'package:charoenkrung_app/providers/bookProvider.dart';
 import 'package:charoenkrung_app/providers/orderProvider.dart';
+import 'package:charoenkrung_app/providers/preOrderProvider.dart';
 import 'package:charoenkrung_app/providers/productProvider.dart';
 import 'package:charoenkrung_app/providers/shopProvider.dart';
 import 'package:charoenkrung_app/providers/userProvider.dart';
@@ -35,7 +37,9 @@ class _UserState extends State<User> {
         ),
         ChangeNotifierProvider(create: (_) => ShopProvider(shops: shopList)),
         ChangeNotifierProvider(create: (_) => OrderProvider()),
-        ChangeNotifierProvider(create: (_) => ProductProvider())
+        ChangeNotifierProvider(create: (_) => ProductProvider()),
+        ChangeNotifierProvider(create: (_) => PreOrderProvider()),
+        ChangeNotifierProvider(create: (_) => BookProvider())
       ],
       child: Scaffold(
         backgroundColor: Config.accentColor,
