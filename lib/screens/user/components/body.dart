@@ -8,6 +8,7 @@ import 'package:charoenkrung_app/providers/productProvider.dart';
 import 'package:charoenkrung_app/providers/shopProvider.dart';
 import 'package:charoenkrung_app/providers/userProvider.dart';
 import 'package:charoenkrung_app/screens/user/components/book/bookList.dart';
+import 'package:charoenkrung_app/screens/user/components/history/historyList.dart';
 import 'package:charoenkrung_app/screens/user/components/order/orderList.dart';
 import 'package:charoenkrung_app/screens/user/components/shop/shopList.dart';
 import 'package:charoenkrung_app/services/bookService.dart';
@@ -50,7 +51,7 @@ class _BodyState extends State<Body> {
         return BookList();
         break;
       case 'ประวัติ':
-        return Container();
+        return HistoryList();
         break;
       case 'ร้านของฉัน':
         return ShopList();
