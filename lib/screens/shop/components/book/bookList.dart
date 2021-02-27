@@ -48,7 +48,9 @@ class _BookListState extends State<BookList> {
     var bookList = Provider.of<BookProvider>(context).books.where((book) {
       var index =
           preOrders.indexWhere((preOrder) => preOrder.pre_id == book.pre_id);
-      return preOrders[index].sid == widget.sid;
+      return preOrders[index].sid == widget.sid &&
+          preOrders[index].status != 'reject' &&
+          preOrders[index].status != 'success';
     }).toList();
     return bookList.length > 0
         ? ListView.builder(

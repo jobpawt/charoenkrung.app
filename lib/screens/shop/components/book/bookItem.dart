@@ -152,20 +152,60 @@ class BookItem extends StatelessWidget {
         ]);
         break;
       case 'confirm':
-        return Center(
-          child: Text(
-            'ยืนยันออร์เดอร์แล้ว',
-            style: TextStyle(color: Colors.grey, fontSize: 16),
-          ),
+        return Column(
+          children: [
+            Center(
+              child: Text(
+                'ยืนยันออร์เดอร์แล้ว',
+                style: TextStyle(color: Colors.grey, fontSize: 16),
+              ),
+            ),
+            Center(
+              child: Container(
+                margin: EdgeInsets.all(Config.kMargin),
+                child: createButton(
+                    text: 'ยืนยันการรับสินค้า',
+                    color: Colors.pink,
+                    press: () async {
+                      book.status = 'success';
+                      //send data to another
+                      await BookService.edit(data: book, token: user.token)
+                          .then((value) {
+                        if (value == null) {
+                          channel.sink.add(
+                            jsonEncode(
+                              RealtimeData(
+                                  type: 'edit_book', data: book.toJson()),
+                            ),
+                          );
+                          provider.edit(book);
+                        }
+                      });
+                    }),
+              ),
+            )
+          ],
         );
         break;
       case 'reject':
-      default:
         return Center(
           child: Text(
             'ถูกยกเลิกแล้ว',
             style: TextStyle(color: Colors.grey, fontSize: 16),
           ),
+        );
+        break;
+      case 'success':
+        return Center(
+          child: Text(
+            'ส่งสำเร็จแล้ว',
+            style: TextStyle(color: Colors.teal, fontSize: 16),
+          ),
+        );
+        break;
+      default:
+        return Center(
+          child: Text('-'),
         );
     }
   }

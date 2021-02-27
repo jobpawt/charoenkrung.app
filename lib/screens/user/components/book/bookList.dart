@@ -41,7 +41,9 @@ class _BookListState extends State<BookList> {
     var preOrders = Provider.of<PreOrderProvider>(context).preOrders;
     var user = Provider.of<UserProvider>(context).user;
     var bookList = Provider.of<BookProvider>(context).books.where((book) {
-      return book.uid == user.uid;
+      return book.uid == user.uid &&
+          book.status != 'reject' &&
+          book.status != 'success';
     }).toList();
 
     return bookList.length > 0
