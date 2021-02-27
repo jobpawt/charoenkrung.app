@@ -17,12 +17,21 @@ class OrderItem extends StatelessWidget {
         child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(order.date.toString().split('T')[0]),
         Text(
-          product.name,
-          style: TextStyle(fontSize: 16),
+          order.date.toString().split('T')[0],
+          style: TextStyle(fontSize: 12, color: Colors.grey),
         ),
-        Text('สถานะ ${order.status}')
+        Container(
+          margin: EdgeInsets.symmetric(vertical: 10),
+          child: Text(
+            product.name,
+            style: TextStyle(fontSize: 16, color: Colors.black),
+          ),
+        ),
+        Text(
+          'สถานะ ${order.status}',
+          style: TextStyle(fontSize: 14, color: Colors.teal),
+        )
       ],
     ));
   }
