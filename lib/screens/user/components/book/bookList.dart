@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:charoenkrung_app/config/config.dart';
 import 'package:charoenkrung_app/data/bookData.dart';
 import 'package:charoenkrung_app/data/realtimeData.dart';

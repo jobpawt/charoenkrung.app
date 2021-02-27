@@ -90,7 +90,13 @@ class _BodyState extends State<Body> {
     var token = Provider.of<UserProvider>(context, listen: false).user.token;
     await BuyService.getAll(token: token).then((value) {
       if (value.type != 'error') {
-        Provider.of<OrderProvider>(context, listen: false).addAll(value.data);
+        var today = DateTime.now().toLocal().toString().split(' ')[0];
+        var ordersList = value.data as List<BuyData>;
+        Provider.of<OrderProvider>(context, listen: false)
+            .addAll(ordersList.where((element) {
+          var date = DateTime.parse(element.date).toString().split(' ')[0];
+          return date == today;
+        }).toList());
       }
     });
   }
