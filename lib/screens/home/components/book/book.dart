@@ -143,10 +143,13 @@ class _BookState extends State<Book> {
               type: EditTextType.phone,
               text: 'เบอร์โทรศัพท์',
             ),
-            createButton(
-                text: 'ยืนยัน',
-                color: Config.primaryColor,
-                press: () => _book(context: context, user: user.user)),
+            Container(
+              margin: EdgeInsets.all( 20),
+              child: createButton(
+                  text: 'ยืนยัน',
+                  color: Config.primaryColor,
+                  press: () => _book(context: context, user: user.user)),
+            ),
             SizedBox(
               height: Config.kMargin,
             )

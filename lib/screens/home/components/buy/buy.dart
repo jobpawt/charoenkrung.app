@@ -119,20 +119,37 @@ class _BuyState extends State<Buy> {
               ),
             ),
           ),
-          Container(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                selectNumber(),
-                Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text('รวมราคา ${widget.promotion.price * amount} บาท'),
+          widget.promotion != null
+              ? Container(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      selectNumber(),
+                      Expanded(
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(
+                              'รวมราคา ${widget.promotion.price * amount} บาท'),
+                        ),
+                      )
+                    ],
                   ),
                 )
-              ],
-            ),
-          ),
+              : Container(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      selectNumber(),
+                      Expanded(
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(
+                              'รวมราคา ${widget.product.price * amount} บาท'),
+                        ),
+                      )
+                    ],
+                  ),
+                ),
           Container(
             margin: EdgeInsets.all(Config.kMargin),
             child: Column(
@@ -272,7 +289,9 @@ class _BuyState extends State<Buy> {
         payment_id: paymentResponse.data['id'],
         send_type_id: sendResponse.data['id'],
         amount: amount,
-        sum: (widget.promotion.price * amount),
+        sum: widget.promotion != null
+            ? (widget.promotion.price * amount)
+            : (widget.product.price * amount),
         pid: widget.product.pid,
         pro_id: widget.promotion != null ? widget.promotion.pro_id : null,
         uid: user.uid,

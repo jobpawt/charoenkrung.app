@@ -1,8 +1,6 @@
 import 'dart:convert';
 import 'package:charoenkrung_app/config/config.dart';
 import 'package:charoenkrung_app/data/buyData.dart';
-import 'package:charoenkrung_app/data/paymentData.dart';
-import 'package:charoenkrung_app/data/productData.dart';
 import 'package:charoenkrung_app/data/realtimeData.dart';
 import 'package:charoenkrung_app/providers/orderProvider.dart';
 import 'package:charoenkrung_app/providers/productProvider.dart';
@@ -32,9 +30,12 @@ class _OrderListState extends State<OrderList> {
   _OrderListState({this.channel}) {
     channel.stream.listen((res) {
       RealtimeData data = RealtimeData.fromJson(jsonDecode(res));
-      if(data.type == 'new_buy'){
+      if (data.type == 'new_buy') {
         var buyData = BuyData.fromJson(data.data);
         Provider.of<OrderProvider>(context, listen: false).add(buyData);
+      } else if (data.type == 'edit_buy') {
+        var buyData = BuyData.fromJson(data.data);
+        Provider.of<OrderProvider>(context, listen: false).edit(buyData);
       }
     });
   }
@@ -49,6 +50,7 @@ class _OrderListState extends State<OrderList> {
         ? orders.where((buy) {
             var index =
                 products.indexWhere((product) => product.pid == buy.pid);
+            print('debug index value => $index');
             return products[index].sid == widget.sid;
           }).toList()
         : List<BuyData>();

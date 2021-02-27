@@ -1,16 +1,19 @@
 import 'package:charoenkrung_app/data/buyData.dart';
 import 'package:charoenkrung_app/data/shopData.dart';
+import 'package:charoenkrung_app/providers/bookProvider.dart';
 import 'package:charoenkrung_app/providers/orderProvider.dart';
 import 'package:charoenkrung_app/providers/menuProvider.dart';
 import 'package:charoenkrung_app/providers/preOrderProvider.dart';
 import 'package:charoenkrung_app/providers/productProvider.dart';
 import 'package:charoenkrung_app/providers/promotionProvider.dart';
 import 'package:charoenkrung_app/providers/userProvider.dart';
+import 'package:charoenkrung_app/screens/shop/components/book/bookList.dart';
 import 'package:charoenkrung_app/screens/shop/components/order/orderList.dart';
 import 'package:charoenkrung_app/screens/shop/components/preorder/preOrderList.dart';
 import 'package:charoenkrung_app/screens/shop/components/product/productList.dart';
 import 'package:charoenkrung_app/screens/shop/components/promotion/promotionList.dart';
 import 'package:charoenkrung_app/screens/shop/components/setting/settingShop.dart';
+import 'package:charoenkrung_app/services/bookService.dart';
 import 'package:charoenkrung_app/services/buyService.dart';
 import 'package:charoenkrung_app/services/preOrderService.dart';
 import 'package:charoenkrung_app/services/productService.dart';
@@ -28,7 +31,6 @@ class Body extends StatefulWidget {
 }
 
 class _BodyState extends State<Body> {
-
   @override
   void initState() {
     super.initState();
@@ -36,6 +38,7 @@ class _BodyState extends State<Body> {
     _getAllPreOrder();
     _getAllPromotions();
     _getAllOrder();
+    _getAllBook();
   }
 
   @override
@@ -47,7 +50,12 @@ class _BodyState extends State<Body> {
   Widget checkBody(String menu) {
     switch (menu) {
       case 'ออร์เดอร์':
-        return OrderList(sid: widget.shop.sid,);
+        return OrderList(
+          sid: widget.shop.sid,
+        );
+        break;
+      case 'จอง':
+        return BookList(sid: widget.shop.sid);
         break;
       case 'อาหาร':
         return ProductList(sid: widget.shop.sid);
@@ -67,6 +75,15 @@ class _BodyState extends State<Body> {
         return Container();
         break;
     }
+  }
+
+  _getAllBook() async {
+    var token = Provider.of<UserProvider>(context, listen: false).user.token;
+    await BookService.getAll(token: token).then((value) {
+      if (value.type != 'error') {
+        Provider.of<BookProvider>(context, listen: false).addAll(value.data);
+      }
+    });
   }
 
   _getAllOrder() async {

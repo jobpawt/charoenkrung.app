@@ -14,6 +14,7 @@ class BookData {
   int amount;
   int sum;
   String date;
+  String status;
 
   BookData(
       // ignore: non_constant_identifier_names
@@ -27,7 +28,8 @@ class BookData {
       this.payment_id,
       this.amount,
       this.sum,
-      this.date});
+      this.date,
+      this.status});
 
   BookData.fromJson(Map<String, dynamic> json) {
     this.book_id = json['book_id'];
@@ -38,6 +40,7 @@ class BookData {
     this.amount = json['amount'];
     this.sum = json['sum'];
     this.date = json['date'];
+    this.status = json['status'];
   }
 
   Map<String, dynamic> toJson() {
@@ -50,6 +53,7 @@ class BookData {
     data['amount'] = this.amount;
     data['sum'] = this.sum;
     data['date'] = this.date;
+    data['status'] = this.status;
     return data;
   }
 }
