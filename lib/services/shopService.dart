@@ -54,4 +54,19 @@ class ShopService {
       return ServerResponse.fromJson(jsonDecode(response.body));
     }
   }
+
+  static Future<ServerResponse> delete({ShopData shop, String token}) async {
+    shop.status = 'deleted';
+    var response = await Http.patch('${Config.DATABASE}/shop/edit/${shop.sid}',
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+          'Authorization': 'Bearer $token'
+        },
+        body: jsonEncode(shop.toJson()));
+    if (response.statusCode == 200) {
+      return null;
+    } else {
+      return ServerResponse.fromJson(jsonDecode(response.body));
+    }
+  }
 }

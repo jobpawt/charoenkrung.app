@@ -81,10 +81,13 @@ class _ShopAddState extends State<ShopAdd> {
           OpenDaySelect(
             days: open,
           ),
-          createButton(
-              text: 'สร้าง',
-              color: Config.primaryColor,
-              press: () => _createShop(context, user.user)),
+          Container(
+            margin: EdgeInsets.all(Config.kMargin),
+            child: createButton(
+                text: 'สร้าง',
+                color: Config.primaryColor,
+                press: () => _createShop(context, user.user)),
+          ),
           SizedBox(height: Config.kMargin)
         ],
       )),
