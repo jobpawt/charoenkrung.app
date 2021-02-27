@@ -18,7 +18,7 @@ class _ProductListState extends State<ProductList> {
         ? Provider.of<ProductProvider>(context).products.where((element) {
             var index = shopList.indexWhere((shop) => shop.sid == element.sid);
             return shopList[index].status == 'ACTIVE' &&
-                shopList[index].status != 'NOT ALLOW';
+                element.status == 'ACTIVE';
           }).toList()
         : List<ProductData>();
 
