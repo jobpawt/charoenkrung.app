@@ -2,11 +2,7 @@ import 'package:charoenkrung_app/data/shopData.dart';
 import 'package:flutter/material.dart';
 
 class ShopProvider extends ChangeNotifier {
-  List<ShopData> shops;
-
-  ShopProvider({this.shops}) {
-    notifyListeners();
-  }
+  List<ShopData> shops = new List();
 
   void add(ShopData shop) {
     shops.add(shop);

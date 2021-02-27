@@ -23,8 +23,6 @@ class User extends StatefulWidget {
 }
 
 class _UserState extends State<User> {
-  List<ShopData> shopList = new List();
-
   @override
   Widget build(BuildContext context) {
     var user = Provider.of<UserProvider>(context, listen: false);
@@ -35,7 +33,7 @@ class _UserState extends State<User> {
               selected: 0,
               menus: ['ออร์เดอร์', 'จอง', 'ประวัติ', 'ร้านของฉัน']),
         ),
-        ChangeNotifierProvider(create: (_) => ShopProvider(shops: shopList)),
+        ChangeNotifierProvider(create: (_) => ShopProvider()),
         ChangeNotifierProvider(create: (_) => OrderProvider()),
         ChangeNotifierProvider(create: (_) => ProductProvider()),
         ChangeNotifierProvider(create: (_) => PreOrderProvider()),

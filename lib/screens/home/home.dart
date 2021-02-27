@@ -1,5 +1,4 @@
 import 'package:charoenkrung_app/config/config.dart';
-import 'package:charoenkrung_app/data/shopData.dart';
 import 'package:charoenkrung_app/data/userData.dart';
 import 'package:charoenkrung_app/providers/orderProvider.dart';
 import 'package:charoenkrung_app/providers/preOrderProvider.dart';
@@ -10,8 +9,6 @@ import 'package:charoenkrung_app/providers/userProvider.dart';
 import 'package:charoenkrung_app/screens/home/components/body.dart';
 import 'package:charoenkrung_app/screens/user/login/login.dart';
 import 'package:charoenkrung_app/screens/user/user.dart';
-import 'package:charoenkrung_app/services/shopService.dart';
-import 'package:charoenkrung_app/utils/dialogBox.dart';
 import 'package:charoenkrung_app/utils/menuBar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -41,7 +38,8 @@ class _HomeState extends State<Home> {
         ChangeNotifierProvider(create: (_) => ProductProvider()),
         ChangeNotifierProvider(create: (_) => PreOrderProvider()),
         ChangeNotifierProvider(create: (_) => PromotionProvider()),
-        ChangeNotifierProvider(create: (_) => OrderProvider())
+        ChangeNotifierProvider(create: (_) => OrderProvider()),
+        ChangeNotifierProvider(create: (_) => ShopProvider())
       ],
       child: Scaffold(
         backgroundColor: Config.lightColor,
@@ -53,7 +51,10 @@ class _HomeState extends State<Home> {
 
   Widget buildBody({BuildContext context}) {
     return Column(
-      children: [MenuBar(), Body()],
+      children: [
+        MenuBar(),
+        Body()
+      ],
     );
   }
 

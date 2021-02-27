@@ -1,19 +1,19 @@
 import 'package:charoenkrung_app/data/preOrderData.dart';
 import 'package:charoenkrung_app/data/productData.dart';
 import 'package:charoenkrung_app/data/promotionData.dart';
+import 'package:charoenkrung_app/data/shopData.dart';
 import 'package:charoenkrung_app/providers/menuProvider.dart';
-import 'package:charoenkrung_app/providers/orderProvider.dart';
 import 'package:charoenkrung_app/providers/preOrderProvider.dart';
 import 'package:charoenkrung_app/providers/productProvider.dart';
 import 'package:charoenkrung_app/providers/promotionProvider.dart';
-import 'package:charoenkrung_app/providers/userProvider.dart';
+import 'package:charoenkrung_app/providers/shopProvider.dart';
 import 'package:charoenkrung_app/screens/home/components/preorder/preOrderList.dart';
 import 'package:charoenkrung_app/screens/home/components/product/productList.dart';
 import 'package:charoenkrung_app/screens/home/components/promotion/promotionList.dart';
-import 'package:charoenkrung_app/services/buyService.dart';
 import 'package:charoenkrung_app/services/preOrderService.dart';
 import 'package:charoenkrung_app/services/productService.dart';
 import 'package:charoenkrung_app/services/promotionService.dart';
+import 'package:charoenkrung_app/services/shopService.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -29,6 +29,7 @@ class _BodyState extends State<Body> {
     _getAllPreOrder();
     _getAllPromotion();
     _getAllProduct();
+    _getAllShop();
   }
 
   @override
@@ -89,6 +90,18 @@ class _BodyState extends State<Body> {
         var productList = res.data as List<ProductData>;
         Provider.of<ProductProvider>(context, listen: false)
             .addAll(productList);
+      }
+    });
+  }
+
+  _getAllShop() async {
+    await ShopService.getAll().then((res) async {
+      if (res.type != 'error') {
+        var shopList = res.data as List<ShopData>;
+        print('debug ${shopList.length}');
+        List<ShopData> myShop =
+            shopList.where((element) => element.status != 'DELETED').toList();
+        Provider.of<ShopProvider>(context, listen: false).addAll(myShop);
       }
     });
   }

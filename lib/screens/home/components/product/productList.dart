@@ -1,4 +1,6 @@
+import 'package:charoenkrung_app/data/productData.dart';
 import 'package:charoenkrung_app/providers/productProvider.dart';
+import 'package:charoenkrung_app/providers/shopProvider.dart';
 import 'package:charoenkrung_app/screens/home/components/product/productItem.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -11,7 +13,14 @@ class ProductList extends StatefulWidget {
 class _ProductListState extends State<ProductList> {
   @override
   Widget build(BuildContext context) {
-    var productList = Provider.of<ProductProvider>(context).products;
+    var shopList = Provider.of<ShopProvider>(context).shops;
+    var productList = shopList != null
+        ? Provider.of<ProductProvider>(context).products.where((element) {
+            var index = shopList.indexWhere((shop) => shop.sid == element.sid);
+            return shopList[index].status == 'ACTIVE' &&
+                shopList[index].status != 'NOT ALLOW';
+          }).toList()
+        : List<ProductData>();
 
     return productList.length != 0
         ? ListView.builder(
