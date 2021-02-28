@@ -49,12 +49,9 @@ class _OrderListState extends State<OrderList> {
     return ordersList.length > 0 && products.length > 0
         ? ListView.builder(
             itemCount: ordersList.length,
-            itemBuilder: (context, index) => OrderItem(
-                  order: ordersList[index],
-                  product: products.firstWhere(
-                      (element) => element.pid == ordersList[index].pid),
-                  channel: channel,
-                ))
+            itemBuilder: (context, index) =>
+                OrderItem(order: ordersList[index], channel: channel),
+          )
         : Container();
   }
 

@@ -51,9 +51,6 @@ class _BookListState extends State<BookList> {
             itemCount: bookList.length,
             itemBuilder: (context, index) => BookItem(
               book: bookList[index],
-              preOrder: preOrders.firstWhere(
-                  (element) => element.pre_id == bookList[index].pre_id),
-              sendType: _getSendType(bookList[index].send_type_id, user.token),
               channel: channel,
               provider: Provider.of<BookProvider>(context, listen: false),
             ),

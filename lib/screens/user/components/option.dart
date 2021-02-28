@@ -50,7 +50,6 @@ class Options extends StatelessWidget {
                 }).toList());
               }
             }
-            ;
           },
         );
         break;
@@ -76,7 +75,7 @@ class Options extends StatelessWidget {
                     child: Text(
                       'สร้างร้าน',
                       style:
-                          TextStyle(color: Config.primaryColor, fontSize: 14),
+                          TextStyle(color: Config.primaryColor, fontSize: 18),
                     )),
               ],
             ),

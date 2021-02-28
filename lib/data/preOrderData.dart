@@ -9,6 +9,8 @@ class PreOrderData {
   String start;
   String end;
   String status;
+  String shop_name;
+  String shop_status;
 
   PreOrderData(
       {this.pre_id,
@@ -20,7 +22,9 @@ class PreOrderData {
         this.stock,
         this.start,
         this.end,
-        this.status
+        this.status,
+        this.shop_name,
+        this.shop_status
       });
 
   PreOrderData.fromJson(Map<String, dynamic> json) {
@@ -34,6 +38,8 @@ class PreOrderData {
     this.start = json['start'];
     this.end = json['end'];
     this.status = json['status'];
+    this.shop_name = json['shop_name'];
+    this.shop_status = json['shop_status'];
   }
 
   Map<String, dynamic> toJson() {
@@ -48,6 +54,8 @@ class PreOrderData {
     data['start'] = this.start;
     data['end'] = this.end;
     data['status'] = this.status;
+    data['shop_name'] = this.shop_name;
+    data['shop_status'] = this.shop_status;
     return data;
   }
 }

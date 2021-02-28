@@ -224,6 +224,7 @@ class _PreOrderAddState extends State<PreOrderAdd> {
     newPreOrders.sid = widget.sid;
     newPreOrders.start = start.toLocal().toString().split(' ')[0];
     newPreOrders.end = end.toLocal().toString().split(' ')[0];
+    newPreOrders.status = widget.preOrder.status;
     newPreOrders.url = url;
 
     DialogBox.loading(context: context, message: 'กำลังแก้ไข');

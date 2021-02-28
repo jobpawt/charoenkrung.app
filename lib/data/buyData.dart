@@ -1,18 +1,36 @@
+import 'dart:convert';
+
 class BuyData {
   // ignore: non_constant_identifier_names
   String buy_id;
   String uid;
   String pid;
+
   // ignore: non_constant_identifier_names
   String pro_id;
+
   // ignore: non_constant_identifier_names
   String payment_id;
+
   // ignore: non_constant_identifier_names
   String send_type_id;
   int amount;
   int sum;
   String date;
   String status;
+
+  //another tables
+  String send_type;
+  String recive_date;
+  Map<String, dynamic> position;
+  String address;
+  String phone;
+  String product_name;
+  String sid;
+  String payment_type;
+  String payment_url;
+  String payment_status;
+  String promotion_name;
 
   BuyData({
     // ignore: non_constant_identifier_names
@@ -28,7 +46,18 @@ class BuyData {
     this.amount,
     this.sum,
     this.date,
-    this.status
+    this.status,
+    this.send_type,
+    this.recive_date,
+    this.position,
+    this.address,
+    this.phone,
+    this.product_name,
+    this.sid,
+    this.payment_type,
+    this.payment_url,
+    this.payment_status,
+    this.promotion_name,
   });
 
   BuyData.fromJson(Map<String, dynamic> json) {
@@ -42,6 +71,19 @@ class BuyData {
     this.sum = json['sum'];
     this.date = json['date'];
     this.status = json['status'];
+    //another tables
+    this.send_type = json['send_type'];
+    this.recive_date = json['recive_date'];
+    this.position =
+        json['position'] == null ? Map() : jsonDecode(json['position']);
+    this.address = json['address'];
+    this.phone = json['phone'];
+    this.product_name = json['product_name'];
+    this.sid = json['sid'];
+    this.payment_type = json['payment_type'];
+    this.payment_url = json['payment_url'];
+    this.payment_status = json['payment_status'];
+    this.promotion_name = json['promotion_name'];
   }
 
   Map<String, dynamic> toJson() {

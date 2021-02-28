@@ -9,6 +9,7 @@ import 'package:charoenkrung_app/providers/userProvider.dart';
 import 'package:charoenkrung_app/services/bookService.dart';
 import 'package:charoenkrung_app/services/imageService.dart';
 import 'package:charoenkrung_app/services/paymentService.dart';
+import 'package:charoenkrung_app/services/preOrderService.dart';
 import 'package:charoenkrung_app/services/sendTypeService.dart';
 import 'package:charoenkrung_app/utils/appBar.dart';
 import 'package:charoenkrung_app/utils/button.dart';
@@ -200,8 +201,12 @@ class _BookState extends State<Book> {
         sum: (widget.preOrder.price * amount),
         amount: amount,
       );
-      await BookService.create(data: bookData, token: user.token).then((value) {
+      await BookService.create(data: bookData, token: user.token).then((value) async {
         DialogBox.close(context);
+        //edit stock
+        widget.preOrder.stock = widget.preOrder.stock - bookData.amount;
+        await PreOrderService.edit(widget.preOrder, user.token);
+
         if (value == null) {
           DialogBox.oneButton(
               context: context,

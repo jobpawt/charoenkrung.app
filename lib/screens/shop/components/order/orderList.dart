@@ -6,9 +6,6 @@ import 'package:charoenkrung_app/providers/orderProvider.dart';
 import 'package:charoenkrung_app/providers/productProvider.dart';
 import 'package:charoenkrung_app/providers/userProvider.dart';
 import 'package:charoenkrung_app/screens/shop/components/order/orderItem.dart';
-import 'package:charoenkrung_app/services/paymentService.dart';
-import 'package:charoenkrung_app/services/sendTypeService.dart';
-import 'package:charoenkrung_app/utils/response.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:web_socket_channel/io.dart';
@@ -44,14 +41,10 @@ class _OrderListState extends State<OrderList> {
   Widget build(BuildContext context) {
     var orders = Provider.of<OrderProvider>(context).orders;
     var products = Provider.of<ProductProvider>(context).products;
-    var user = Provider.of<UserProvider>(context).user;
 
     var myOrders = orders != null && orders.length > 0
         ? orders.where((buy) {
-            var index =
-                products.indexWhere((product) => product.pid == buy.pid);
-            print('debug index value => $index');
-            return products[index].sid == widget.sid;
+            return buy.sid == widget.sid;
           }).toList()
         : List<BuyData>();
 
@@ -59,22 +52,10 @@ class _OrderListState extends State<OrderList> {
       itemCount: myOrders.length,
       itemBuilder: (context, index) => OrderItem(
         orders: myOrders[index],
-        product: products
-            .firstWhere((element) => element.pid == myOrders[index].pid),
-        payment: _getPayment(myOrders[index].payment_id, user.token),
-        sendType: _getSendType(myOrders[index].send_type_id, user.token),
         provider: Provider.of<OrderProvider>(context, listen: false),
         channel: channel,
       ),
     );
-  }
-
-  Future<ServerResponse> _getPayment(String id, String token) async {
-    return await PaymentService.get(payment_id: id, token: token);
-  }
-
-  Future<ServerResponse> _getSendType(String id, String token) async {
-    return await SendTypeService.get(id: id, token: token);
   }
 
   @override

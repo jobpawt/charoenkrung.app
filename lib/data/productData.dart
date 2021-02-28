@@ -9,6 +9,9 @@ class ProductData{
   String status;
   // ignore: non_constant_identifier_names
   int type_id;
+  String type_name;
+  String shop_name;
+  String shop_status;
 
   ProductData(
       {this.pid,
@@ -20,7 +23,7 @@ class ProductData{
       this.price,
       this.status,
       // ignore: non_constant_identifier_names
-      this.type_id});
+      this.type_id,});
 
   ProductData.fromJson(Map<String, dynamic> json) {
     this.pid = json['pid'];
@@ -32,6 +35,9 @@ class ProductData{
     this.price = json['price'];
     this.status = json['status'];
     this.type_id = json['type_id'];
+    this.type_name = json['type_name'];
+    this.shop_name = json['shop_name'];
+    this.shop_status = json['shop_status'];
   }
 
   Map<String, dynamic> toJson() {

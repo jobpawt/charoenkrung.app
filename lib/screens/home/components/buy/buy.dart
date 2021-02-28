@@ -12,6 +12,7 @@ import 'package:charoenkrung_app/screens/user/login/login.dart';
 import 'package:charoenkrung_app/services/buyService.dart';
 import 'package:charoenkrung_app/services/imageService.dart';
 import 'package:charoenkrung_app/services/paymentService.dart';
+import 'package:charoenkrung_app/services/productService.dart';
 import 'package:charoenkrung_app/services/sendTypeService.dart';
 import 'package:charoenkrung_app/utils/appBar.dart';
 import 'package:charoenkrung_app/utils/button.dart';
@@ -297,9 +298,12 @@ class _BuyState extends State<Buy> {
         uid: user.uid,
       );
       print('debug [buyData] => ${buyData.toJson()}');
-      await BuyService.create(data: buyData, token: user.token).then((value) {
+      await BuyService.create(data: buyData, token: user.token)
+          .then((value) async {
         DialogBox.close(context);
         if (value == null) {
+          widget.product.stock = widget.product.stock - buyData.amount;
+          await ProductService.edit(widget.product, user.token);
           DialogBox.oneButton(
               context: context,
               title: 'สำเร็จ',

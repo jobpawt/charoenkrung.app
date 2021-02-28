@@ -43,24 +43,16 @@ class _BookListState extends State<BookList> {
 
   @override
   Widget build(BuildContext context) {
-    var preOrders = Provider.of<PreOrderProvider>(context).preOrders;
-    var user = Provider.of<UserProvider>(context).user;
     var bookList = Provider.of<BookProvider>(context).books.where((book) {
-      var index =
-          preOrders.indexWhere((preOrder) => preOrder.pre_id == book.pre_id);
-      return preOrders[index].sid == widget.sid &&
-          preOrders[index].status != 'reject' &&
-          preOrders[index].status != 'success';
+      return book.sid == widget.sid &&
+          book.status != 'reject' &&
+          book.status != 'success';
     }).toList();
-    return bookList.length > 0
+    return bookList.length > 0 && bookList != null
         ? ListView.builder(
             itemCount: bookList.length,
             itemBuilder: (context, index) => BookItem(
               book: bookList[index],
-              preOrder: preOrders.firstWhere(
-                  (element) => element.pre_id == bookList[index].pre_id),
-              sendType: _getSendType(bookList[index].send_type_id, user.token),
-              payment: _getPayment(bookList[index].payment_id, user.token),
               channel: channel,
               provider: Provider.of<BookProvider>(context, listen: false),
             ),

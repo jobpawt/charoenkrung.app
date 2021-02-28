@@ -13,17 +13,15 @@ class PreOrderList extends StatefulWidget {
 class _PreOrderListState extends State<PreOrderList> {
   @override
   Widget build(BuildContext context) {
-    var shopList = Provider.of<ShopProvider>(context).shops;
     var preOrderList =
-        Provider.of<PreOrderProvider>(context).preOrders.where((element) {
-      var start = DateTime.parse(element.start);
-      var end = DateTime.parse(element.end);
+        Provider.of<PreOrderProvider>(context).preOrders.where((preOrder) {
+      var start = DateTime.parse(preOrder.start);
+      var end = DateTime.parse(preOrder.end);
       int left = end.difference(start).inDays -
           DateTime.now().difference(start).inDays;
-      var index = shopList.indexWhere((shop) => shop.sid == element.sid);
       return left > 0 &&
-          shopList[index].status == 'ACTIVE' &&
-          element.status == 'ACTIVE';
+          preOrder.shop_status == 'ACTIVE' &&
+          preOrder.status == 'ACTIVE';
     }).toList();
 
     return preOrderList.length != 0

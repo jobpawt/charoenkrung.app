@@ -23,19 +23,10 @@ import 'package:web_socket_channel/web_socket_channel.dart';
 
 class OrderItem extends StatelessWidget {
   final BuyData orders;
-  final ProductData product;
-  final Future<ServerResponse> payment;
-  final Future<ServerResponse> sendType;
   final OrderProvider provider;
   final WebSocketChannel channel;
 
-  OrderItem(
-      {this.orders,
-      this.product,
-      this.payment,
-      this.sendType,
-      this.provider,
-      this.channel});
+  OrderItem({this.orders, this.provider, this.channel});
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +42,7 @@ class OrderItem extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          product.name,
+          orders.product_name,
           style: TextStyle(fontSize: 18, color: Colors.black),
         ),
         Container(
@@ -61,7 +52,7 @@ class OrderItem extends StatelessWidget {
             style: TextStyle(fontSize: 16),
           ),
         ),
-        promotion != null
+        orders.promotion_name != null
             ? Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -72,53 +63,38 @@ class OrderItem extends StatelessWidget {
                   Container(
                     margin: EdgeInsets.only(bottom: Config.kMargin),
                     width: double.infinity,
-                    child:  Card(child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text(promotion.name, ),
-                    ),),
+                    child: Card(
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(orders.promotion_name),
+                      ),
+                    ),
                   ),
                 ],
               )
             : Container(),
-        FutureBuilder(
-            future: sendType,
-            builder: (context, snapshot) {
-              var res = snapshot.data as ServerResponse;
-              var send = res != null && res.type != 'error'
-                  ? res.data as SendTypeData
-                  : null;
-              return Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text('ประเภทการจัดส่ง : ${send?.type ?? '-'}'),
-                  send?.type == 'myself'
-                      ? createFlatButton(text: 'มารับตอน ${send?.recive_date}')
-                      : Container()
-                ],
-              );
-            }),
-        FutureBuilder(
-          future: payment,
-          builder: (context, snapshot) {
-            var res = snapshot.data as ServerResponse;
-            PaymentData payment =
-                res != null && res.type != 'error' ? res.data : null;
-            return Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                    'การชำระเงินแบบ : ${payment != null ? payment.type : '-'}'),
-                payment != null && payment.type == 'online'
-                    ? createFlatButton(
-                        text: 'ตรวจสอบการโอนเงิน',
-                        color: Config.darkColor,
-                        press: () => DialogBox.imageDialog(
-                            context: context, url: payment.url),
-                      )
-                    : Container()
-              ],
-            );
-          },
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text('ประเภทการจัดส่ง : ${orders.send_type ?? '-'}'),
+            orders.send_type == 'myself'
+                ? createFlatButton(text: 'มารับตอน ${orders.recive_date}')
+                : Container()
+          ],
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text('การชำระเงินแบบ : ${orders.payment_type}'),
+            orders.payment_type == 'online'
+                ? createFlatButton(
+                    text: 'ตรวจสอบการโอนเงิน',
+                    color: Config.darkColor,
+                    press: () => DialogBox.imageDialog(
+                        context: context, url: orders.payment_url),
+                  )
+                : Container()
+          ],
         ),
         SizedBox(
           height: Config.kMargin,
@@ -138,8 +114,9 @@ class OrderItem extends StatelessWidget {
             press: () async {
               orders.status = 'reject';
               //send data to another
-              await BuyService.edit(data: orders, token: user.token).then((value) {
-                if(value == null){
+              await BuyService.edit(data: orders, token: user.token)
+                  .then((value) {
+                if (value == null) {
                   channel.sink.add(jsonEncode(
                       RealtimeData(type: 'edit_buy', data: orders.toJson())));
                   provider.edit(orders);
@@ -153,8 +130,9 @@ class OrderItem extends StatelessWidget {
             press: () async {
               orders.status = 'confirm';
               //send data to another
-              await BuyService.edit(data: orders, token: user.token).then((value) {
-                if(value == null){
+              await BuyService.edit(data: orders, token: user.token)
+                  .then((value) {
+                if (value == null) {
                   channel.sink.add(jsonEncode(
                       RealtimeData(type: 'edit_buy', data: orders.toJson())));
                   provider.edit(orders);

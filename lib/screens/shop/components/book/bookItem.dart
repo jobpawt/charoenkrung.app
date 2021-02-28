@@ -21,20 +21,11 @@ import 'package:web_socket_channel/web_socket_channel.dart';
 
 class BookItem extends StatelessWidget {
   final BookData book;
-  final PreOrderData preOrder;
-  final Future<ServerResponse> payment;
-  final Future<ServerResponse> sendType;
   final WebSocketChannel channel;
   final BookProvider provider;
   final formatter = NumberFormat("#,###");
 
-  BookItem(
-      {this.book,
-      this.preOrder,
-      this.payment,
-      this.sendType,
-      this.channel,
-      this.provider});
+  BookItem({this.book, this.channel, this.provider});
 
   @override
   Widget build(BuildContext context) {
@@ -50,7 +41,7 @@ class BookItem extends StatelessWidget {
         Container(
           margin: EdgeInsets.symmetric(vertical: 10),
           child: Text(
-            preOrder.name,
+            book.preOrder_name,
             style: TextStyle(fontSize: 16),
           ),
         ),
@@ -63,49 +54,32 @@ class BookItem extends StatelessWidget {
           margin: EdgeInsets.symmetric(vertical: 10),
           child: Text('สถานะ ${book.status}'),
         ),
-        FutureBuilder(
-            future: sendType,
-            builder: (context, snapshot) {
-              var res = snapshot.data as ServerResponse;
-              var send = res != null && res.type != 'error'
-                  ? res.data as SendTypeData
-                  : null;
-              return Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text('ประเภทการจัดส่ง : ${send?.type ?? '-'}'),
-                  send?.type == 'myself'
-                      ? Container(
-                          child: Text(
-                              'มารับตอน ${send?.recive_date?.split('T')[0]}'),
-                          margin: EdgeInsets.symmetric(vertical: 10),
-                        )
-                      : Container()
-                ],
-              );
-            }),
-        FutureBuilder(
-          future: payment,
-          builder: (context, snapshot) {
-            var res = snapshot.data as ServerResponse;
-            PaymentData payment =
-                res != null && res.type != 'error' ? res.data : null;
-            return Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                    'การชำระเงินแบบ : ${payment != null ? payment.type : '-'}'),
-                payment != null && payment.type == 'online'
-                    ? createFlatButton(
-                        text: 'ตรวจสอบการโอนเงิน',
-                        color: Config.darkColor,
-                        press: () => DialogBox.imageDialog(
-                            context: context, url: payment.url),
-                      )
-                    : Container()
-              ],
-            );
-          },
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text('ประเภทการจัดส่ง : ${book.send_type}'),
+            book.send_type == 'myself'
+                ? Container(
+                    child: Text('มารับตอน ${book.recive_date.split('T')[0]}'),
+                    margin: EdgeInsets.symmetric(vertical: 10),
+                  )
+                : Container()
+          ],
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+                'การชำระเงินแบบ : ${book.payment_id != null ? book.payment_type : '-'}'),
+            book.payment_type == 'online'
+                ? createFlatButton(
+                    text: 'ตรวจสอบการโอนเงิน',
+                    color: Config.darkColor,
+                    press: () => DialogBox.imageDialog(
+                        context: context, url: book.payment_url),
+                  )
+                : Container()
+          ],
         ),
         buildButton(book.status, user.user)
       ],
