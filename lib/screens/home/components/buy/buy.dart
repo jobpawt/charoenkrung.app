@@ -81,9 +81,6 @@ class _BuyState extends State<Buy> {
   @override
   Widget build(BuildContext context) {
     var user = Provider.of<UserProvider>(context);
-    setState(() {
-      _phone.text = user.user.phone;
-    });
     return Scaffold(
       backgroundColor: Config.lightColor,
       appBar: createAppBar(
@@ -124,11 +121,11 @@ class _BuyState extends State<Buy> {
               ? Container(
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.baseline,
                     children: [
                       selectNumber(),
                       Expanded(
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
+                        child: Center(
                           child: Text(
                               'รวมราคา ${widget.promotion.price * amount} บาท'),
                         ),
@@ -394,38 +391,53 @@ class _BuyState extends State<Buy> {
   }
 
   Widget selectNumber() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        IconButton(
-            icon: Icon(
-              Icons.remove_circle_outline_rounded,
-              color: Config.primaryColor,
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            IconButton(
+                icon: Icon(
+                  Icons.remove_circle_outline_rounded,
+                  color: Config.primaryColor,
+                ),
+                onPressed: () {
+                  setState(() {
+                    if (amount > 1) {
+                      --amount;
+                    }
+                  });
+                }),
+            Padding(
+              padding: EdgeInsets.only(left: 5, right: 5),
+              child: SizedBox(
+                  width: 20,
+                  child: Align(
+                      alignment: Alignment.center, child: Text('$amount'))),
             ),
-            onPressed: () {
-              setState(() {
-                if (amount > 1) {
-                  --amount;
-                }
-              });
-            }),
-        Padding(
-          padding: EdgeInsets.only(left: 5, right: 5),
-          child: SizedBox(
-              width: 20,
-              child:
-                  Align(alignment: Alignment.center, child: Text('$amount'))),
+            IconButton(
+                icon: Icon(
+                  Icons.add_circle_outline_rounded,
+                  color: Config.primaryColor,
+                ),
+                onPressed: () {
+                  setState(() {
+                    if (amount + 1 <= widget.product.stock) {
+                      ++amount;
+                    }
+                  });
+                }),
+          ],
         ),
-        IconButton(
-            icon: Icon(
-              Icons.add_circle_outline_rounded,
-              color: Config.primaryColor,
-            ),
-            onPressed: () {
-              setState(() {
-                ++amount;
-              });
-            }),
+        Container(
+          margin: EdgeInsets.symmetric(horizontal: 10),
+          child: Text(
+            'เหลืออยู่ ${widget.product.stock} ชิ้น',
+            style: TextStyle(color: Colors.grey),
+          ),
+        )
       ],
     );
   }

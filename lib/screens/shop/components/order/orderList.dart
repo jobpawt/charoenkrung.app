@@ -4,7 +4,6 @@ import 'package:charoenkrung_app/data/buyData.dart';
 import 'package:charoenkrung_app/data/realtimeData.dart';
 import 'package:charoenkrung_app/providers/orderProvider.dart';
 import 'package:charoenkrung_app/providers/productProvider.dart';
-import 'package:charoenkrung_app/providers/userProvider.dart';
 import 'package:charoenkrung_app/screens/shop/components/order/orderItem.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
